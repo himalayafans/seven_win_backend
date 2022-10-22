@@ -10,11 +10,7 @@ public enum GameTypes
     /// </summary>
     None = 0,
     /// <summary>
-    /// 出7制胜（规定时间按规则发帖将获得基础分）
+    /// 出7制胜
     /// </summary>
-    SevenWin = 1,
-    /// <summary>
-    /// 7个房间发帖，遇到无效房间则失效
-    /// </summary>
-    SevenRoom = 2
+    SevenWin = 1
 }

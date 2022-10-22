@@ -15,15 +15,13 @@ public class Guild : BaseEntity
     /// <summary>
     /// Discord名称
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Discord服务器(禁止代码中调用)
     /// </summary>
     public Guild()
     {
-        this.Name = String.Empty; 
-        this.DiscordId = 0; 
     }
     /// <summary>
     /// Discord服务器

@@ -3,9 +3,9 @@
 namespace SevenWinBackend.Domain.Game;
 
 /// <summary>
-/// 出7制胜游戏
+/// 出7制胜积分明细
 /// </summary>
-public class SevenWinGame: IGame
+public class SevenWinScoreDetail: IScoreDetail
 {
     /// <summary>
     /// 价格包含7的次数

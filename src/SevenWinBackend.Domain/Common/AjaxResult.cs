@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SevenWinBackend.Common
+namespace SevenWinBackend.Domain.Common
 {
     /// <summary>
     /// AJAX响应结果

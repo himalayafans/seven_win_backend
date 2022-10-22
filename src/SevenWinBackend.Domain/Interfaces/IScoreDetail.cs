@@ -5,8 +5,8 @@
 namespace SevenWinBackend.Domain.Interfaces;
 
 /// <summary>
-/// 游戏接口（空接口），
+/// 游戏积分明细接口（空接口）
 /// </summary>
-public interface IGame
+public interface IScoreDetail
 {
 }

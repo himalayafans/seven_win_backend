@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SevenWinBackend.Domain.Interfaces
+{
+    /// <summary>
+    /// 数据库接口
+    /// </summary>
+    public interface IDatabase
+    {
+        /// <summary>
+        /// 是否存在数据表
+        /// </summary>
+        Task<bool> IsExistTables();
+        /// <summary>
+        /// 添加种子数据
+        /// </summary>
+        Task Seed();
+        /// <summary>
+        /// 升级数据库
+        /// </summary>
+        Task Update();
+    }
+}
