@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SevenWinBackend.Domain.Interfaces
+namespace SevenWinBackend.Application.Interfaces
 {
     /// <summary>
     /// 查询选项

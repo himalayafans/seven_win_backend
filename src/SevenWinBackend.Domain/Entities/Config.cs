@@ -4,7 +4,7 @@ using SevenWinBackend.Domain.Common;
 namespace SevenWinBackend.Domain.Entities;
 
 /// <summary>
-/// 应用配置
+/// 系统内部配置
 /// </summary>
 public class Config : BaseEntity
 {

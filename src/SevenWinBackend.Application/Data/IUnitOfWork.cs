@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SevenWinBackend.Application.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SevenWinBackend.Domain.Interfaces
+namespace SevenWinBackend.Application.Data
 {
     /// <summary>
     /// 工作单元接口

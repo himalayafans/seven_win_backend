@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SevenWinBackend.Domain.Interfaces
+namespace SevenWinBackend.Application.Data
 {
     /// <summary>
     /// 数据库接口
