@@ -14,11 +14,19 @@ namespace SevenWinBackend.Application.Common
         /// <summary>
         /// 提示信息
         /// </summary>
-        public StringBuilder Tips { get; } = new StringBuilder();
+        private StringBuilder Tips { get; } = new StringBuilder();
 
         /// <summary>
-        /// 获取的总分数
+        /// 增加Discord回复消息
         /// </summary>
-        public int TotalScore { get; set; }
+        public void AddMessage(string msg)
+        {
+            this.Tips.AppendLine(msg);
+        }
+
+        public override string ToString()
+        {
+            return Tips.ToString();
+        }
     }
 }

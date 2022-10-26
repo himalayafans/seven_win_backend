@@ -9,7 +9,7 @@ namespace SevenWinBackend.Application.Exceptions
     /// <summary>
     /// 模型验证异常
     /// </summary>
-    public class ValidationException : Exception
+    public class ValidationException : AppException
     {
         /// <summary>
         /// 字段名称

@@ -1,4 +1,5 @@
 ﻿using Discord.WebSocket;
+using SevenWinBackend.Application.Common;
 using SevenWinBackend.Application.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,6 @@ namespace SevenWinBackend.Application.Base
         {
             Successor = game;
         }
-        public abstract void Handle(SocketMessage message);
+        public abstract Task Handle(SocketUserMessage message, PlayResult playResult);
     }
 }

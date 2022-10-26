@@ -1,6 +1,8 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace SevenWinBackend.Common;
 
@@ -103,5 +105,35 @@ public static class StringExtensions
         var base64EncodedBytes = Convert.FromBase64String(base64);
         return Encoding.UTF8.GetString(base64EncodedBytes);
     }
-
+    /// <summary>
+    /// 判断字符串是否是Uri
+    /// </summary>
+    public static bool IsUri(this string text)
+    {
+        return Uri.TryCreate(text, UriKind.Absolute, out _);
+    }
+    /// <summary>
+    /// 判断字符串是否是全字母
+    /// </summary>
+    public static bool IsOnlyLetters(this string text)
+    {
+        return Regex.IsMatch(text, @"^[a-zA-Z]+$");
+    }
+    /// <summary>
+    /// 获取URL的文件扩展名(不支持带？查询字符串的URL)
+    /// </summary>
+    public static string GetFileExtensionFromUrl(this string url)
+    {
+        if (string.IsNullOrWhiteSpace(url))
+        {
+            throw new ArgumentNullException(nameof(url));
+        }
+        // 代码来源： https://stackoverflow.com/a/52748299
+        string result = Path.GetExtension(url);
+        if (!result.IsOnlyLetters())
+        {
+            throw new InvalidOperationException($"URL参数不符合规范：{url}");
+        }
+        return result.ToLower();
+    }
 }
