@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 namespace SevenWinBackend.Application.Repositories
 {
     /// <summary>
-    /// 出7制胜存储库
+    /// 出7制胜频道配置
     /// </summary>
-    public interface ISevenWinGameRepository : IRepository<SevenWinGame>
+    public interface ISevenWinGameChannelRepository: IRepository<SevenWinGameChannel>
     {
-        Task<List<SevenWinGame>> GetPlayerGameId(Guid playerGameId);
     }
 }

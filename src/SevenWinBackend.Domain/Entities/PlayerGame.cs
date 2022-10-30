@@ -17,11 +17,11 @@ public class PlayerGame : BaseEntity
     /// <summary>
     /// 本次游戏获得的玉米小计(明细在ScoreDetail属性)
     /// </summary>
-    public decimal Score { get; set; }
+    public int Score { get; set; }
     /// <summary>
     /// 游戏类型
     /// </summary>
-    public GameTypes Type { get; set; } = GameTypes.None;
+    public GameTypes GameType { get; set; } = GameTypes.None;
     /// <summary>
     /// 积分详情（IScoreDetail对象序列化后的JSON）
     /// </summary>
@@ -30,6 +30,10 @@ public class PlayerGame : BaseEntity
     /// 创建时间
     /// </summary>
     public DateTime CreatedAt { get; set; }
+    /// <summary>
+    /// 更新时间
+    /// </summary>
+    public DateTime UpdatedAt { get; set; }
 
     /// <summary>
     /// 玩家参与的游戏(禁止代码中调用)
@@ -45,13 +49,15 @@ public class PlayerGame : BaseEntity
     /// <param name="score">积分小计</param>
     /// <param name="type">游戏类型</param>
     /// <param name="game">游戏</param>
-    public PlayerGame(Guid playerId, decimal score, GameTypes type, IScoreDetail game)
+    public PlayerGame(Guid playerId,int score, GameTypes type, IScoreDetail game)
     {
+        DateTime now = DateTime.Now;
         Id = Guid.NewGuid();
         PlayerId = playerId;
         Score = score;
-        Type = type;
+        GameType = type;
         ScoreDetail = JsonHelper.Serialize(game);
-        CreatedAt = DateTime.Now;
+        CreatedAt = now;
+        UpdatedAt = now;
     }
 }

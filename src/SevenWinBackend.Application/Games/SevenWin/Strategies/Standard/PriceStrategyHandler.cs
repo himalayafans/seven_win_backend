@@ -28,19 +28,6 @@ internal class PriceStrategyHandler : BaseStrategyHandler
 
     public override void Handle(StandardStrategyContext context)
     {
-        //string priceText = context.OcrResult.GetPrice();
-        //var count = priceText.ToCharArray().Count(p => p == '7');
-        //// 如果价格包含7
-        //if (count >= 1)
-        //{
-        //    var score = GetScore(count);
-        //    result.TotalScore = result.TotalScore + score;
-        //    result.SevenTimes = count;
-        //    result.AddMessage($"喜币价格{price}包含{count}个7，获得{score}个玉米");
-        //}
-        //else
-        //{
-        //    result.AddMessage($"喜币价格{price},没有包含7");
-        //}
+        throw new NotImplementedException();
     }
 }

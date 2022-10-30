@@ -22,9 +22,9 @@ namespace SevenWinBackend.Domain.Entities
         /// </summary>
         public string DiscordUrl { get; set; } = string.Empty;
         /// <summary>
-        /// Dissord文件哈希值
+        /// 原始文件哈希值
         /// </summary>
-        public string DiscordFileHash { get; set; } = string.Empty;
+        public string OriginalFileHash { get; set; } = string.Empty;
         /// <summary>
         /// 本地文件名称
         /// </summary>
@@ -40,7 +40,7 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// Ocr引擎
         /// </summary>
-        public string OcrEngine { get; set; } = string.Empty;
+        public OcrEngineType OcrEngine { get; set; } = OcrEngineType.None;
         /// <summary>
         /// Ocr识别状态
         /// </summary>
@@ -53,12 +53,12 @@ namespace SevenWinBackend.Domain.Entities
         {
         }
 
-        public DiscordImage(Guid playerId, string discordUrl, string discordFileHash, string localFileName, string localFileHash, string ocrText, string ocrEngine, OcrStatus ocrStatus)
+        public DiscordImage(Guid playerId, string discordUrl, string discordFileHash, string localFileName, string localFileHash, string ocrText, OcrEngineType ocrEngine, OcrStatus ocrStatus)
         {
             Id = Guid.NewGuid();
             PlayerId = playerId;
             DiscordUrl = discordUrl;
-            DiscordFileHash = discordFileHash;
+            OriginalFileHash = discordFileHash;
             LocalFileName = localFileName;
             LocalFileHash = localFileHash;
             OcrText = ocrText;

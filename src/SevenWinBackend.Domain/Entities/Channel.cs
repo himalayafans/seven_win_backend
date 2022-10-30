@@ -1,4 +1,5 @@
 ﻿using SevenWinBackend.Domain.Base;
+using SevenWinBackend.Domain.Enums;
 
 namespace SevenWinBackend.Domain.Entities;
 
@@ -15,22 +16,18 @@ public class Channel : BaseEntity
     /// <summary>
     /// Discord ID
     /// </summary>
-    public ulong DiscordId { get; set; }
+    public ulong DiscordId { get; set; } = 0;
 
     /// <summary>
     /// discord名称
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Discord频道(禁止代码中调用)
     /// </summary>
     public Channel()
     {
-        Id = Guid.Empty;
-        Name = string.Empty;
-        GuildId = Guid.Empty;
-        DiscordId = 0;
     }
 
     /// <summary>

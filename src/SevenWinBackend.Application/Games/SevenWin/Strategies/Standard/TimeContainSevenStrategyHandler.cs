@@ -35,6 +35,19 @@ internal class TimeContainSevenStrategyHandler : BaseStrategyHandler
     //}
     public override void Handle(StandardStrategyContext context)
     {
-        throw new NotImplementedException();
+        // Discord发帖的分钟数
+        var minute = context.SocketUserMessage.CreatedAt.Minute;
+        //    // 获取分钟数的最后一位，例如 57 得到 7
+        var lastNum = minute.ToString().ToCharArray().Last();
+        //    // 末尾字符必须是7
+        if(lastNum == '7')
+        {
+
+        }
+        else
+        {
+            context.PlayResult.AddMessage("发帖时间的尾数不是7");
+
+        }
     }
 }

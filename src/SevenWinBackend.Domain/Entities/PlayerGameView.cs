@@ -15,11 +15,11 @@ public class PlayerGameView : BaseView
     /// <summary>
     /// 本次游戏获得的玉米小计(明细在ScoreDetail属性)
     /// </summary>
-    public decimal Score { get; set; }
+    public int Score { get; set; }
     /// <summary>
     /// 游戏类型
     /// </summary>
-    public GameTypes Type { get; set; } = GameTypes.None;
+    public GameTypes GameType { get; set; } = GameTypes.None;
     /// <summary>
     /// 积分详情（IScoreDetail对象序列化后的JSON）
     /// </summary>
@@ -28,6 +28,10 @@ public class PlayerGameView : BaseView
     /// 创建时间
     /// </summary>
     public DateTime CreatedAt { get; set; }
+    /// <summary>
+    /// 更新时间
+    /// </summary>
+    public DateTime UpdatedAt { get; set; }
     /// <summary>
     /// 玩家discord ID
     /// </summary>

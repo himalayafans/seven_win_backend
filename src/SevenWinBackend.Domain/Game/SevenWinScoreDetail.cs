@@ -8,6 +8,10 @@ namespace SevenWinBackend.Domain.Game;
 public class SevenWinScoreDetail: IScoreDetail
 {
     /// <summary>
+    /// 喜币价格
+    /// </summary>
+    public string Price { get; set; } = string.Empty;
+    /// <summary>
     /// 价格包含7的次数
     /// </summary>
     public int PriceIncludesSevenTimes { get; set; }

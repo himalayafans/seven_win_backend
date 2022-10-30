@@ -56,9 +56,5 @@ namespace SevenWinBackend.Application.Data
         /// 玩家
         /// </summary>
         IPlayerRepository Player { get; }
-        /// <summary>
-        /// 出7制胜游戏
-        /// </summary>
-        ISevenWinGameRepository SevenWinGame { get; }
     }
 }

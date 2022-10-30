@@ -31,13 +31,5 @@ namespace SevenWinBackend.Application.Repositories
         /// 设置应用程序标识
         /// </summary>
         public Task SetAppId();
-        /// <summary>
-        /// 获取出7制胜配置
-        /// </summary>
-        public Task<SevenGameConfig> GetSevenGameConfig();
-        /// <summary>
-        /// 设置出7制胜配置
-        /// </summary>
-        public Task SetSevenGameConfig(SevenGameConfig sevenGameConfig);
     }
 }
