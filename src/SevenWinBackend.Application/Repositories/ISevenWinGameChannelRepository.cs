@@ -13,5 +13,6 @@ namespace SevenWinBackend.Application.Repositories
     /// </summary>
     public interface ISevenWinGameChannelRepository: IRepository<SevenWinGameChannel>
     {
+
     }
 }

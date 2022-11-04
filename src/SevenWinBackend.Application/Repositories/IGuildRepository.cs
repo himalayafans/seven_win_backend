@@ -16,6 +16,6 @@ namespace SevenWinBackend.Application.Repositories
         /// <summary>
         /// 通过Discord ID获取Discord服务器
         /// </summary>
-        Task<Guild> GetByDiscordId(ulong discordId);
+        Task<Guild?> GetByDiscordId(ulong discordId);
     }
 }

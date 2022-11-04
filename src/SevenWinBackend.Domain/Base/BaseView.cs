@@ -3,7 +3,7 @@
 /// <summary>
 /// 视图基类
 /// </summary>
-public class BaseView
+public abstract class BaseView
 {
     /// <summary>
     /// 主键ID

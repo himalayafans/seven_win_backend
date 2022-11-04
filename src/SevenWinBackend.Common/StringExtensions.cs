@@ -36,7 +36,7 @@ public static class StringExtensions
             if (char.IsUpper(c))
             {
                 sb.Append('_');
-                sb.Append(char.ToLowerInvariant(c));
+                sb.Append(char.ToLowerInvariant(c)); 
             }
             else
             {

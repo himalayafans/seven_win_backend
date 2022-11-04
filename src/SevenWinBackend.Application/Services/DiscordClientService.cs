@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 using SevenWinBackend.Application.Common;
 using SevenWinBackend.Application.Games.SevenWin;
+using SevenWinBackend.Application.Services.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,14 @@ namespace SevenWinBackend.Application.Services
         private readonly CommandService commandService;
         private readonly AppSettings settings;
         private readonly SevenWinGameEngine sevenWinGameEngine;
+        private readonly DataService dataService;
 
-        public DiscordClientService(DiscordClientFactory factory, ILogger<DiscordClientService> logger, CommandService commandService, AppSettings appSettings, SevenWinGameEngine sevenWinGameEngine)
+        public DiscordClientService(DiscordClientFactory factory, ILogger<DiscordClientService> logger, CommandService commandService, AppSettings appSettings, SevenWinGameEngine sevenWinGameEngine, DataService dataService)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.sevenWinGameEngine = sevenWinGameEngine ?? throw new ArgumentNullException(nameof(sevenWinGameEngine));
+            this.dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
             this.client = factory.Create();
             this.commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             this.commandService.Log += CommandService_Log;
@@ -37,7 +40,13 @@ namespace SevenWinBackend.Application.Services
             this.client.Ready += Client_Ready;
             this.client.MessageReceived += Client_MessageReceived;
             this.client.Log += Client_Log;
+            this.client.LoggedIn += Client_LoggedIn;
             this.commandService.CommandExecuted += CommandService_CommandExecuted;
+        }
+
+        private Task Client_LoggedIn()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task LoginAsync()
@@ -57,13 +66,13 @@ namespace SevenWinBackend.Application.Services
 
         private Task CommandService_Log(Discord.LogMessage arg)
         {
-            logger.LogInformation(arg.ToString());
+            logger.LogInformation($"[Discord] ${arg.ToString()}");
             return Task.CompletedTask;
         }
 
         private Task Client_Log(Discord.LogMessage arg)
         {
-            logger.LogInformation(arg.ToString());
+            logger.LogInformation($"[Discord] ${arg.ToString()}");
             return Task.CompletedTask;
         }
 
@@ -80,6 +89,16 @@ namespace SevenWinBackend.Application.Services
                 // 忽略机器人消息
                 return;
             }
+            var user = message.Author as SocketGroupUser;
+            if (user == null)
+            {
+                return;
+            }
+            var channel = message.Channel as SocketGuildChannel;
+            if (channel == null)
+            {
+                return;
+            }
             PlayResult result = new PlayResult();
             await sevenWinGameEngine.Handle(message, result);
             string replyMessage = result.ToString();
@@ -89,9 +108,10 @@ namespace SevenWinBackend.Application.Services
             }
         }
 
-        private Task Client_Ready()
+        private async Task Client_Ready()
         {
-            throw new NotImplementedException();
+            this.logger.LogInformation("[Discord] Client Ready.");
+            await this.dataService.Fill(this.client);
         }
 
         public void Dispose()

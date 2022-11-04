@@ -18,8 +18,4 @@
 		<ProjectReference Include="..\SevenWinBackend.Domain\SevenWinBackend.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Games\SevenWin\Strategies\Advanced\" />
-	</ItemGroup>
-
 </Project>

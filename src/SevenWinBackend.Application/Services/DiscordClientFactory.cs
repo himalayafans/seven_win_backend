@@ -14,18 +14,18 @@ namespace SevenWinBackend.Application.Services
 {
     public class DiscordClientFactory : IDiscordClientFactory
     {
-        private readonly AppSettings _settings;
+        private readonly AppSettings settings;
 
         public DiscordClientFactory(AppSettings settings)
         {
-            _settings = settings;
+            this.settings = settings;
         }
 
         public DiscordSocketClient Create()
         {
             DiscordSocketConfig config = new DiscordSocketConfig()
             {
-                RestClientProvider = DefaultRestClientProvider.Create(useProxy: _settings.EnableDiscordProxy),
+                RestClientProvider = DefaultRestClientProvider.Create(useProxy: settings.EnableDiscordProxy),
                 LogLevel = LogSeverity.Verbose,
                 GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent
             };

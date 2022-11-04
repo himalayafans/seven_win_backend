@@ -1,12 +1,12 @@
 ﻿using System.Globalization;
-using SevenWinBackend.Application.Games.SevenWin.Base;
+using SevenWinBackend.Application.Games.SevenWin.Core;
 
-namespace SevenWinBackend.Application.Games.SevenWin.Strategies.Standard;
+namespace SevenWinBackend.Application.Games.SevenWin.Strategies;
 
 /// <summary>
 /// 价格策略处理器
 /// </summary>
-internal class PriceStrategyHandler : BaseStrategyHandler
+internal class PriceStrategy : BaseStrategy
 {
     /// <summary>
     /// 获取奖励玉米
@@ -26,7 +26,7 @@ internal class PriceStrategyHandler : BaseStrategyHandler
         };
     }
 
-    public override void Handle(StandardStrategyContext context)
+    public override Task Handle(StrategyContext context)
     {
         throw new NotImplementedException();
     }

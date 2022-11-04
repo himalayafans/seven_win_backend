@@ -15,5 +15,9 @@ namespace SevenWinBackend.Application.Services
         /// 识别图片文件
         /// </summary>
         public Task<IOcrResult> Parse(FileInfo imageFile);
+        /// <summary>
+        /// OCR引擎名称
+        /// </summary>
+        public string GetName();
     }
 }

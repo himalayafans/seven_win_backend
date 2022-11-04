@@ -12,6 +12,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SevenWinBackend.Common;
+using SevenWinBackend.Application.Exceptions;
+using SevenWinBackend.Application.Games.SevenWin.Core;
+using SevenWinBackend.Application.Games.SevenWin.Strategies;
 
 namespace SevenWinBackend.Application.Games.SevenWin
 {
@@ -20,72 +24,82 @@ namespace SevenWinBackend.Application.Games.SevenWin
     /// </summary>
     public class SevenWinGameEngine : BaseGameEngine
     {
-        private static readonly List<string> _imageTypes = new List<string>()
+        private static readonly List<string> ImageTypes = new List<string>()
         {
             "image/jpeg",
             //"image/gif",
             "image/png",
             //"image/bmp"
         };
+
         private readonly ILogger<SevenWinGameEngine> logger;
         private readonly IOcrService ocrService;
         private readonly IImageService imageService;
-        private readonly SevenWinGameEngine sevenWinGameEngine;
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
         private readonly IWebHostEnvironment env;
         private readonly HttpService httpService;
+        private readonly IServiceProvider serviceProvider;
 
-        public SevenWinGameEngine(ILogger<SevenWinGameEngine> logger, IOcrService ocrService, IImageService imageService, SevenWinGameEngine sevenWinGameEngine, IUnitOfWorkFactory unitOfWorkFactory, IWebHostEnvironment environment, HttpService httpService)
+        public SevenWinGameEngine(ILogger<SevenWinGameEngine> logger, IOcrService ocrService,
+            IImageService imageService, IUnitOfWorkFactory unitOfWorkFactory, IWebHostEnvironment environment,
+            HttpService httpService, IServiceProvider serviceProvider)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.ocrService = ocrService ?? throw new ArgumentNullException(nameof(ocrService));
             this.imageService = imageService ?? throw new ArgumentNullException(nameof(imageService));
-            this.sevenWinGameEngine = sevenWinGameEngine ?? throw new ArgumentNullException(nameof(sevenWinGameEngine));
             this.unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
-            this.env = environment ?? throw new ArgumentNullException(nameof(environment));
+            env = environment ?? throw new ArgumentNullException(nameof(environment));
             this.httpService = httpService ?? throw new ArgumentNullException(nameof(httpService));
+            this.serviceProvider = serviceProvider;
         }
 
         /// <summary>
         /// 获取消息中的图片，若不存在则返回null
         /// </summary>
-        private static DiscordImageInfo? GetImage(SocketUserMessage message)
+        private async Task<DiscordImageInfo?> GetImage(SocketUserMessage message)
         {
-            var images = message.Attachments.Where(p => _imageTypes.Contains(p.ContentType)).ToList();
+            var images = message.Attachments.Where(p => ImageTypes.Contains(p.ContentType)).ToList();
             if (images.Count == 0)
             {
                 return null;
             }
+
             if (images.Count > 1)
             {
-                throw new Exception("本次活动参与无效，一次只能上传一张图片");
+                throw new AppException("本次活动参与无效，一次只能上传一张图片");
             }
+
             var file = message.Attachments.First();
-            return new DiscordImageInfo(file.Url, new ImageSize(file.Width.GetValueOrDefault(), file.Height.GetValueOrDefault()));
+            var stream = await httpService.DownloadAsStream(file.Url);
+            var hash = stream.GetMd5HashCode();
+            ImageSize imageSize = new ImageSize(file.Width.GetValueOrDefault(), file.Height.GetValueOrDefault());
+            return new DiscordImageInfo(file.Url, hash, imageSize, stream);
         }
 
         public override async Task Handle(SocketUserMessage message, PlayResult playResult)
         {
-            DiscordImageInfo? imageInfo = GetImage(message);
-            // 如果Discord消息不包含图片，则忽略消息
-            if (imageInfo == null)
+            if (!string.IsNullOrWhiteSpace(message.CleanContent)) // 如果消息包含文本，则忽略消息
             {
-                if (this.Successor != null)
-                {
-                    await this.Successor.Handle(message, playResult);
-                }
+                await (Successor?.Handle(message, playResult) ?? Task.CompletedTask);
             }
             else
             {
-                // 下载图片文件
-                var directoryPath = Path.Combine(env.WebRootPath, "images");
-                DirectoryInfo directory = new DirectoryInfo(directoryPath);
-                FileInfo oldFile = await this.httpService.Download(imageInfo.Url, directory);
-                // 压缩图片
-                FileInfo newFile = await this.imageService.Resize(oldFile, 2000, 2000);
-                // OCR识别
-                IOcrResult ocrResult = await this.ocrService.Parse(newFile);
-
+                DiscordImageInfo? imageInfo = await GetImage(message);
+                if (imageInfo == null) // 如果Discord消息不包含图片，则忽略消息
+                {
+                    await (Successor?.Handle(message, playResult) ?? Task.CompletedTask);
+                }
+                else
+                {
+                    StrategyContext context = new StrategyContext(playResult, message, this.serviceProvider, imageInfo, new DataCache());
+                    CheckChannelPolicy checkChannelPolicy = new CheckChannelPolicy();
+                    // 必须先检查频道，再检查时间，因为时间不符合，会产生反馈信息
+                    CheckDiscordTimeStrategy checkDiscordTimeStrategy = new CheckDiscordTimeStrategy();
+                    checkChannelPolicy.SetSuccessor(checkDiscordTimeStrategy);
+                    CheckPlayerPolicy checkPlayerPolicy = new CheckPlayerPolicy();
+                    checkDiscordTimeStrategy.SetSuccessor(checkPlayerPolicy);
+                    await checkChannelPolicy.Handle(context);
+                }
             }
         }
     }

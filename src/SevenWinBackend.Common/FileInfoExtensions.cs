@@ -16,7 +16,7 @@ namespace SevenWinBackend.Common
         {
             using (var stream = File.OpenRead(file.FullName))
             {
-                return stream.GetMD5HashCode();
+                return stream.GetMd5HashCode();
             }
         }
     }

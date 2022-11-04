@@ -19,8 +19,8 @@ namespace SevenWinBackend.Application.Repositories
         /// </summary>
         public Task<Channel> GetByDiscordId(ulong discordId);
         /// <summary>
-        /// 获取指定游戏能参与的频道
+        /// 判断Discord频道是否存在
         /// </summary>
-        public Task<List<Channel>> GetChannelsWithGameType(GameTypes types);
+        public Task<bool> Contains(ulong discordId);
     }
 }
