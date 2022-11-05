@@ -35,7 +35,7 @@ public class PlayerGameView : BaseView
     /// <summary>
     /// 玩家discord ID
     /// </summary>
-    public ulong PlayerDiscordId { get; set; }
+    public string PlayerDiscordId { get; set; } = string.Empty;
     /// <summary>
     /// 玩家Discord 名称
     /// </summary>
@@ -51,5 +51,5 @@ public class PlayerGameView : BaseView
     /// <summary>
     /// 状态（启用或禁用）
     /// </summary>
-    public PlayerStatus PlayerStatus { get; set; }
+    public PlayerStatus PlayerStatus { get; set; } = PlayerStatus.Enable;
 }

@@ -35,28 +35,23 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// 玩家discord ID
         /// </summary>
-        public ulong PlayerDiscordId { get; set; }
-
+        public string PlayerDiscordId { get; set; } = string.Empty;
         /// <summary>
         /// 玩家Discord 名称
         /// </summary>
         public string PlayerDisplayName { get; set; } = String.Empty;
-
         /// <summary>
         /// 玩家Discord标识符（4位数字,有前导0，因此不能用int）
         /// </summary>
         public string PlayerDiscriminator { get; set; } = string.Empty;
-
         /// <summary>
         /// 玩家头像ID
         /// </summary>
-        public string PlayerAvatarId { get; set; } = String.Empty;
-
+        public string PlayerAvatarId { get; set; } = string.Empty;
         /// <summary>
         /// 频道Discord ID
         /// </summary>
-        public ulong ChannelDiscordId { get; set; } = 0;
-
+        public string ChannelDiscordId { get; set; } = string.Empty;
         /// <summary>
         /// 频道discord名称
         /// </summary>
@@ -65,9 +60,5 @@ namespace SevenWinBackend.Domain.Entities
         /// 是否是基础频道
         /// </summary>
         public bool IsBase { get; set; } = false;
-        /// <summary>
-        /// 是否完成（游戏执行过程有延迟，例如Ocr识别，需要先产生记录->Ocr->积分，才算完成）
-        /// </summary>
-        public bool IsFinish { get; set; } = false;
     }
 }

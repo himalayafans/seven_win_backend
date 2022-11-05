@@ -5,7 +5,7 @@ namespace SevenWinBackend.Domain.Game;
 /// <summary>
 /// 出7制胜积分明细
 /// </summary>
-public class SevenWinScoreDetail: IScoreDetail
+public class SevenWinScoreDetail : IScoreDetail
 {
     /// <summary>
     /// 喜币价格
@@ -18,7 +18,7 @@ public class SevenWinScoreDetail: IScoreDetail
     /// <summary>
     /// 价格包含7获得的积分（玉米）
     /// </summary>
-    public int PriceIncludesSevenScore { get; set; }
+    public int PriceScore { get; set; }
     /// <summary>
     /// 是否是7分发帖
     /// </summary>
@@ -26,5 +26,18 @@ public class SevenWinScoreDetail: IScoreDetail
     /// <summary>
     /// 7分发帖获得的玉米
     /// </summary>
-    public int SevenTimeScore { get; set; }
+    public int TimeScore { get; set; }
+    /// <summary>
+    /// 空频道ID（）
+    /// </summary>
+    public Guid EmptyChannelId { get; set; } = Guid.Empty;
+
+    /// <summary>
+    /// 获得积分总数
+    /// </summary>
+    /// <returns></returns>
+    public int GetSumOfScore()
+    {
+        return TimeScore + PriceScore;
+    }
 }

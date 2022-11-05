@@ -18,7 +18,7 @@ namespace SevenWinBackend.Application.Repositories
         /// <summary>
         /// 通过discord ID获取玩家
         /// </summary>
-        Task<Player?> GetByDiscordId(ulong discordId);
+        Task<Player?> GetByDiscordId(string discordId);
         /// <summary>
         /// 搜索玩家
         /// </summary>

@@ -32,14 +32,28 @@ namespace SevenWinBackend.Common
         /// </summary>
         public static string Serialize<T>(T obj) where T : class
         {
-            return JsonSerializer.Serialize(obj);
+            if (obj == null)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return JsonSerializer.Serialize(obj);
+            }
         }
         /// <summary>
         /// JSON序列化
         /// </summary>
         public static T? Deserialize<T>(string json) where T : class
         {
-            return JsonSerializer.Deserialize<T>(json);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+            else
+            {
+                return JsonSerializer.Deserialize<T>(json);
+            }
         }
     }
 }

@@ -5,6 +5,12 @@ using SevenWinBackend.Domain.Interfaces;
 
 namespace SevenWinBackend.Domain.Entities;
 
+/***************************************
+ * 该表只记录游戏的分数
+ * 因为可能以后的游戏可能是文字类的游戏，不包含图片
+ * 游戏的图片将保存在单独游戏流程的表中
+ ***************************************/
+
 /// <summary>
 /// 玩家参与的游戏
 /// </summary>
@@ -17,7 +23,7 @@ public class PlayerGame : BaseEntity
     /// <summary>
     /// 本次游戏获得的玉米小计(明细在ScoreDetail属性)
     /// </summary>
-    public int Score { get; set; }
+    public int Score { get; set; } = 0;
     /// <summary>
     /// 游戏类型
     /// </summary>
@@ -36,28 +42,49 @@ public class PlayerGame : BaseEntity
     public DateTime UpdatedAt { get; set; }
 
     /// <summary>
-    /// 玩家参与的游戏(禁止代码中调用)
-    /// </summary>
-    public PlayerGame()
-    {
-    }
-
-    /// <summary>
-    /// 玩家参与的游戏
+    /// 创建玩家游戏
     /// </summary>
     /// <param name="playerId">玩家ID</param>
     /// <param name="score">积分小计</param>
     /// <param name="type">游戏类型</param>
-    /// <param name="game">游戏</param>
-    public PlayerGame(Guid playerId,int score, GameTypes type, IScoreDetail game)
+    /// <param name="scoreDetail">积分明细</param>
+    public static PlayerGame Create(Guid playerId, int score, GameTypes type, IScoreDetail scoreDetail)
     {
+        if (playerId == Guid.Empty)
+        {
+            throw new ArgumentNullException(nameof(playerId));
+        }
+        if (scoreDetail == null)
+        {
+            throw new ArgumentNullException(nameof(scoreDetail));
+        }
+        if (type == GameTypes.None)
+        {
+            throw new ArgumentNullException(nameof(type));
+        }
         DateTime now = DateTime.Now;
-        Id = Guid.NewGuid();
-        PlayerId = playerId;
-        Score = score;
-        GameType = type;
-        ScoreDetail = JsonHelper.Serialize(game);
-        CreatedAt = now;
-        UpdatedAt = now;
+        return new PlayerGame()
+        {
+            Id = Guid.NewGuid(),
+            PlayerId = playerId,
+            Score = score,
+            GameType = type,
+            ScoreDetail = JsonHelper.Serialize(scoreDetail),
+            CreatedAt = now,
+            UpdatedAt = now
+        };
+    }
+    /// <summary>
+    /// 设置积分明细
+    /// </summary>
+    /// <exception cref="ArgumentNullException"></exception>
+    public void SetScoreDetail(IScoreDetail scoreDetail)
+    {
+        if (scoreDetail == null)
+        {
+            throw new ArgumentNullException(nameof(scoreDetail));
+        }
+        this.ScoreDetail = JsonHelper.Serialize(scoreDetail);
+        this.UpdatedAt = DateTime.Now;
     }
 }

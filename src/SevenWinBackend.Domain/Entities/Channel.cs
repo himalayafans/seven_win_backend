@@ -16,7 +16,7 @@ public class Channel : BaseEntity
     /// <summary>
     /// Discord ID
     /// </summary>
-    public ulong DiscordId { get; set; } = 0;
+    public string DiscordId { get; set; } = string.Empty;
 
     /// <summary>
     /// discord名称
@@ -24,23 +24,14 @@ public class Channel : BaseEntity
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Discord频道(禁止代码中调用)
+    /// 创建Discord频道
     /// </summary>
-    public Channel()
+    /// <param name="guildId">discord服务器ID</param>
+    /// <param name="discordId">频道Discord id</param>
+    /// <param name="name">频道名称</param>
+    /// <returns></returns>
+    public static Channel Create(Guid guildId, string discordId, string name)
     {
-    }
-
-    /// <summary>
-    /// Discord频道
-    /// </summary>
-    /// <param name="guildId">所属服务器ID</param>
-    /// <param name="discordId">Discord ID</param>
-    /// <param name="name">Discord名称</param>
-    public Channel(Guid guildId, ulong discordId, string name)
-    {
-        Id = Guid.NewGuid();
-        GuildId = guildId;
-        DiscordId = discordId;
-        Name = name;
+        return new Channel() { Id = Guid.NewGuid(), DiscordId = discordId, GuildId = guildId, Name = name };
     }
 }

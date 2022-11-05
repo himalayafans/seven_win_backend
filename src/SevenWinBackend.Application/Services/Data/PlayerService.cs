@@ -25,11 +25,15 @@ namespace SevenWinBackend.Application.Services.Data
         /// </summary>
         public async Task<Player> GetOrAdd(SocketGuildUser user)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
             using var work = this.unitOfWorkFactory.Create();
-            var player = await work.Player.GetByDiscordId(user.Id);
+            var player = await work.Player.GetByDiscordId(user.Id.ToString());
             if (player == null)
             {
-                player = new Player(user.Id, user.DisplayName, user.Discriminator, user.AvatarId);
+                player = Player.Create(user.Id.ToString(), user.DisplayName, user.Discriminator, user.AvatarId);
                 await work.Player.Add(player);
             }
             return player;

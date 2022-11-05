@@ -19,17 +19,19 @@ namespace SevenWinBackend.Domain.Entities
         /// 是否是基础频道
         /// </summary>
         public bool IsBase { get; set; } = false;
-       
 
-        public SevenWinGameChannel()
+        public static SevenWinGameChannel Create(Guid channelId, bool isBase)
         {
-        }
-
-        public SevenWinGameChannel(Guid channelId, bool isBase)
-        {
-            Id = Guid.NewGuid();
-            ChannelId = channelId;
-            IsBase = isBase;
+            if (channelId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(channelId));
+            }
+            return new SevenWinGameChannel()
+            {
+                Id = Guid.NewGuid(),
+                ChannelId = channelId,
+                IsBase = isBase
+            };
         }
     }
 }

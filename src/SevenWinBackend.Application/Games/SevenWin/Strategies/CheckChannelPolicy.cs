@@ -19,8 +19,8 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
         public override async Task Handle(StrategyContext context)
         {
             var services = context.ServiceProvider;
-            var userDiscordId = context.SocketUserMessage.Author.Id;
-            var channelDiscordId = context.SocketUserMessage.Channel.Id;
+            string userDiscordId = context.SocketUserMessage.Author.Id.ToString();
+            string channelDiscordId = context.SocketUserMessage.Channel.Id.ToString();
             // 设置上下文缓存
             ChannelService channelService = services.GetRequiredService<ChannelService>();
             List<SevenWinGameChannelView> channelViews = await channelService.GetSevenWinGameChannels();
@@ -36,7 +36,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
 
             // TODO: 待删除
             //检查是否是参与游戏的频道，不是则忽略消息
-            if (channelViews.Exists(p => p.DiscordId == userDiscordId))
+            if (channelViews.Exists(p => p.DiscordId == userDiscordId.ToString()))
             {
                 // 获取基础游戏记录
                 SevenWinGameService sevenWinGameService = services.GetRequiredService<SevenWinGameService>();
@@ -51,7 +51,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 if (baseGameRecord == null)   // 如果用户在一分钟内没有参与基础游戏
                 {
                     // 如果用户当前游戏频道是基础频道
-                    if (baseChannel.DiscordId == channelDiscordId)
+                    if (baseChannel.DiscordId == channelDiscordId.ToString())
                     {
                         // 用户在规定时间内首次参与基础游戏
                         await (Successor?.Handle(context) ?? Task.CompletedTask);

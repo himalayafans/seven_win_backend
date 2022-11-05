@@ -9,4 +9,8 @@ namespace SevenWinBackend.Domain.Interfaces;
 /// </summary>
 public interface IScoreDetail
 {
+    /// <summary>
+    /// 获得积分总数
+    /// </summary>
+    public int GetSumOfScore();
 }

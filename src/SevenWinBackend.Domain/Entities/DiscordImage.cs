@@ -11,7 +11,7 @@ namespace SevenWinBackend.Domain.Entities
     /// <summary>
     /// Discord图片
     /// </summary>
-    public class DiscordImage: BaseEntity
+    public class DiscordImage : BaseEntity
     {
         /// <summary>
         /// 上传者ID
@@ -44,27 +44,70 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// Ocr识别状态
         /// </summary>
-        public OcrStatus OcrStatus { get; set; }
+        public OcrStatus OcrStatus { get; set; } = OcrStatus.None;
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime CreatedAt { get; set; }
-        public DiscordImage()
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        /// <summary>
+        /// 创建Discord图片
+        /// </summary>
+        public static DiscordImage Create(Guid playerId, string discordUrl, string discordFileHash)
         {
+            if (playerId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(playerId));
+            }
+            if (string.IsNullOrWhiteSpace(discordUrl))
+            {
+                throw new ArgumentNullException(nameof(discordUrl));
+            }
+            if (string.IsNullOrWhiteSpace(discordFileHash))
+            {
+                throw new ArgumentNullException(nameof(discordFileHash));
+            }
+            return new DiscordImage()
+            {
+                Id = Guid.NewGuid(),
+                PlayerId = playerId,
+                DiscordUrl = discordUrl,               
+                OriginalFileHash = discordFileHash,
+                CreatedAt = DateTime.Now
+            };
         }
-
-        public DiscordImage(Guid playerId, string discordUrl, string discordFileHash, string localFileName, string localFileHash, string ocrText, OcrEngineType ocrEngine, OcrStatus ocrStatus)
+        /// <summary>
+        /// 设置本地文件
+        /// </summary>
+        public void SetLocalFile(string localFileName, string localFileHash)
         {
-            Id = Guid.NewGuid();
-            PlayerId = playerId;
-            DiscordUrl = discordUrl;
-            OriginalFileHash = discordFileHash;
-            LocalFileName = localFileName;
-            LocalFileHash = localFileHash;
-            OcrText = ocrText;
-            OcrEngine = ocrEngine;
-            OcrStatus = ocrStatus;
-            CreatedAt = DateTime.Now;
+            if (string.IsNullOrWhiteSpace(localFileName))
+            {
+                throw new ArgumentNullException(nameof(localFileName));
+            }
+            if (string.IsNullOrWhiteSpace(localFileHash))
+            {
+                throw new ArgumentNullException(nameof(localFileHash));
+            }
+            this.LocalFileName = localFileName;
+            this.LocalFileHash = localFileHash;
+        }
+        /// <summary>
+        /// 设置OCR图片识别结果
+        /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void SetOcr(OcrEngineType engineType, OcrStatus status, string ocrText)
+        {
+            if (engineType == OcrEngineType.None)
+            {
+                throw new ArgumentNullException(nameof(engineType));
+            }
+            if (status == OcrStatus.None)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
+            this.OcrStatus = status;
+            this.OcrEngine = engineType;
+            this.OcrText = ocrText;
         }
     }
 }

@@ -13,7 +13,6 @@ namespace SevenWinBackend.Domain.Entities
     public class SevenWinGameChannelView : BaseView
     {
         public Guid ChannelId { get; set; }
-
         /// <summary>
         /// 是否是基础频道
         /// </summary>
@@ -21,8 +20,7 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// Discord ID
         /// </summary>
-        public ulong DiscordId { get; set; } = 0;
-
+        public string DiscordId { get; set; } = string.Empty;
         /// <summary>
         /// discord名称
         /// </summary>

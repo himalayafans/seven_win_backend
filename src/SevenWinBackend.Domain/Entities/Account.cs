@@ -12,17 +12,17 @@ public class Account : BaseEntity
     /// <summary>
     /// 账户名称
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = String.Empty;
 
     /// <summary>
     /// 登录密码(哈希值)
     /// </summary>
-    public string PasswordHash { get; set; }
+    public string PasswordHash { get; set; } = String.Empty;
 
     /// <summary>
     /// 角色
     /// </summary>
-    public RolesType Role { get; set; }
+    public RolesType Role { get; set; } = RolesType.User;
 
     /// <summary>
     /// 创建时间
@@ -33,26 +33,12 @@ public class Account : BaseEntity
     /// 更新时间
     /// </summary>
     public DateTime UpdatedAt { get; set; }
+
     /// <summary>
-    /// 登录账户(禁止代码中调用)
+    /// 创建登录账户
     /// </summary>
-    public Account()
-    {
-        Id = Guid.Empty;
-        Name = String.Empty;
-        PasswordHash = String.Empty;
-        Role = RolesType.User;
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
-    }
-    /// <summary>
-    /// 登录账户
-    /// </summary>
-    /// <param name="name">账户名称</param>
-    /// <param name="password">密码明文</param>
-    /// <param name="role">账户角色</param>
     /// <exception cref="ArgumentNullException"></exception>
-    public Account(string name, string password, RolesType role = RolesType.User)
+    public static Account Create(string name, string password, RolesType role = RolesType.User)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -62,12 +48,15 @@ public class Account : BaseEntity
         {
             throw new ArgumentNullException(nameof(password));
         }
-        Id = Guid.NewGuid();
-        Name = name.Trim().ToLower();
-        PasswordHash = password.Trim().ToSha256Hash();
-        Role = role;
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
+        return new Account()
+        {
+            Id = Guid.NewGuid(),
+            Name = name.Trim().ToLower(),
+            PasswordHash = password.Trim().ToSha256Hash(),
+            Role = role,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        };
     }
     /// <summary>
     /// 修改密码

@@ -10,7 +10,7 @@ public class Guild : BaseEntity
     /// <summary>
     /// discord ID
     /// </summary>
-    public ulong DiscordId { get; set; }
+    public string DiscordId { get; set; } = string.Empty;
 
     /// <summary>
     /// Discord名称
@@ -18,19 +18,23 @@ public class Guild : BaseEntity
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Discord服务器(禁止代码中调用)
+    /// 创建Discord服务器
     /// </summary>
-    public Guild()
+    public static Guild Create(string discordId, string name)
     {
-    }
-    /// <summary>
-    /// Discord服务器
-    /// </summary>
-    /// <param name="discordId">discord ID</param>
-    /// <param name="name">Discord名称</param>
-    public Guild(ulong discordId, string name)
-    {
-        DiscordId = discordId;
-        Name = name;
+        if (discordId == string.Empty)
+        {
+            throw new ArgumentNullException(nameof(discordId));
+        }
+        if (name == string.Empty)
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
+        return new Guild()
+        {
+            Id = Guid.NewGuid(),
+            Name = name,
+            DiscordId = discordId
+        };
     }
 }

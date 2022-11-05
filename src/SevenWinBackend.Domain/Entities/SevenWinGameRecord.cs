@@ -28,23 +28,33 @@ namespace SevenWinBackend.Domain.Entities
         /// 创建时间
         /// </summary>
         public DateTime CreatedAt { get; set; }
+
         /// <summary>
-        /// 是否完成（游戏执行过程有延迟，例如Ocr识别，需要先产生记录->Ocr->积分，才算完成）
+        /// 创建出7制胜游戏记录
         /// </summary>
-        public bool IsFinish { get; set; } = false;
-
-        public SevenWinGameRecord()
+        public static SevenWinGameRecord Create(Guid playerGameId, Guid channelId, Guid discordImageId)
         {
-        }
-
-        public SevenWinGameRecord(Guid playerGameId, Guid channelId, Guid discordImageId)
-        {
-            Id = Guid.NewGuid();
-            PlayerGameId = playerGameId;
-            ChannelId = channelId;
-            DiscordImageId = discordImageId;
-            CreatedAt = DateTime.Now;
-            this.IsFinish = false;
+            if (playerGameId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(playerGameId));
+            }
+            if (channelId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(channelId));
+            }
+            if (discordImageId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(discordImageId));
+            }
+            DateTime now = DateTime.Now;
+            return new SevenWinGameRecord()
+            {
+                Id = Guid.NewGuid(),
+                PlayerGameId = playerGameId,
+                ChannelId = channelId,
+                DiscordImageId = discordImageId,
+                CreatedAt = now
+            };
         }
     }
 }
