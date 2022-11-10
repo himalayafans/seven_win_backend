@@ -35,6 +35,6 @@ namespace SevenWinBackend.Application.Games.SevenWin.Core
         /// <summary>
         /// 游戏频道配置
         /// </summary>
-        public List<SevenWinGameChannelView> Channels { get; set; } = new List<SevenWinGameChannelView>();
+        public List<SevenWinConfigView> Channels { get; set; } = new List<SevenWinConfigView>();
     }
 }

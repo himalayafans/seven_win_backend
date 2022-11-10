@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Entities\SevenWinConfig.cs~RF2b47ad7.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SevenWinBackend.Common\SevenWinBackend.Common.csproj" />
   </ItemGroup>
 

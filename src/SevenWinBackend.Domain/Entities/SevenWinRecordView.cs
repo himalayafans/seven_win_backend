@@ -10,7 +10,7 @@ namespace SevenWinBackend.Domain.Entities
     /// <summary>
     /// 出7制胜游戏记录视图
     /// </summary>
-    public class SevenWinGameRecordView : BaseView
+    public class SevenWinRecordView : BaseView
     {
         /// <summary>
         /// 玩家参与的游戏ID
@@ -24,6 +24,10 @@ namespace SevenWinBackend.Domain.Entities
         /// Discord图片ID
         /// </summary>
         public Guid DiscordImageId { get; set; }
+        /// <summary>
+        /// 是否是基础游戏
+        /// </summary>
+        public bool IsBase { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
@@ -56,9 +60,5 @@ namespace SevenWinBackend.Domain.Entities
         /// 频道discord名称
         /// </summary>
         public string ChannelName { get; set; } = string.Empty;
-        /// <summary>
-        /// 是否是基础频道
-        /// </summary>
-        public bool IsBase { get; set; } = false;
     }
 }

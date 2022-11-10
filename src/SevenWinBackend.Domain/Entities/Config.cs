@@ -1,5 +1,7 @@
-﻿using SevenWinBackend.Domain.Base;
+﻿using SevenWinBackend.Common;
+using SevenWinBackend.Domain.Base;
 using SevenWinBackend.Domain.Common;
+using SevenWinBackend.Domain.Enums;
 
 namespace SevenWinBackend.Domain.Entities;
 
@@ -11,7 +13,7 @@ public class Config : BaseEntity
     /// <summary>
     /// 键名（必须唯一）
     /// </summary>
-    public string KeyName { get; set; } = string.Empty;
+    public ConfigKeyNames KeyName { get; set; } = ConfigKeyNames.None;
     /// <summary>
     /// 键值（可以是JSON）
     /// </summary>
@@ -22,13 +24,12 @@ public class Config : BaseEntity
     /// </summary>
     /// <param name="keyName">键</param>
     /// <param name="keyValue">值</param>
-
-    public static Config Create(ConfigKeyName keyName, string keyValue)
+    public static Config Create(ConfigKeyNames keyName, string keyValue)
     {
         return new Config()
         {
             Id = Guid.NewGuid(),
-            KeyName = keyName.ToString(),
+            KeyName = keyName,
             KeyValue = keyValue
         };
     }

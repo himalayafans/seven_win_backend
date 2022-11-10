@@ -13,6 +13,18 @@ public class PlayerGameView : BaseView
     /// </summary>
     public Guid PlayerId { get; set; }
     /// <summary>
+    /// 服务器ID
+    /// </summary>
+    public Guid GuildId { get; set; }
+    /// <summary>
+    /// 服务器Discord ID
+    /// </summary>
+    public string GuildDiscordId { get; set; } = string.Empty;
+    /// <summary>
+    /// 服务器名称
+    /// </summary>
+    public string GuildName { get; set; } = string.Empty;
+    /// <summary>
     /// 本次游戏获得的玉米小计(明细在ScoreDetail属性)
     /// </summary>
     public int Score { get; set; }

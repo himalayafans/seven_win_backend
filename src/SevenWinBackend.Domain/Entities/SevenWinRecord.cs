@@ -10,7 +10,7 @@ namespace SevenWinBackend.Domain.Entities
     /// <summary>
     /// 出7制胜游戏记录
     /// </summary>
-    public class SevenWinGameRecord : BaseEntity
+    public class SevenWinRecord : BaseEntity
     {
         /// <summary>
         /// 玩家参与的游戏ID
@@ -23,7 +23,11 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// Discord图片ID
         /// </summary>
-        public Guid DiscordImageId { get; set; }
+        public Guid ImageId { get; set; }
+        /// <summary>
+        /// 是否是基础游戏
+        /// </summary>
+        public bool IsBase { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
@@ -32,7 +36,7 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// 创建出7制胜游戏记录
         /// </summary>
-        public static SevenWinGameRecord Create(Guid playerGameId, Guid channelId, Guid discordImageId)
+        public static SevenWinRecord Create(Guid playerGameId, Guid channelId, Guid imageId, bool isBase)
         {
             if (playerGameId == Guid.Empty)
             {
@@ -42,18 +46,19 @@ namespace SevenWinBackend.Domain.Entities
             {
                 throw new ArgumentNullException(nameof(channelId));
             }
-            if (discordImageId == Guid.Empty)
+            if (imageId == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(discordImageId));
+                throw new ArgumentNullException(nameof(imageId));
             }
             DateTime now = DateTime.Now;
-            return new SevenWinGameRecord()
+            return new SevenWinRecord()
             {
                 Id = Guid.NewGuid(),
                 PlayerGameId = playerGameId,
                 ChannelId = channelId,
-                DiscordImageId = discordImageId,
-                CreatedAt = now
+                ImageId = imageId,
+                CreatedAt = now,
+                IsBase = isBase
             };
         }
     }

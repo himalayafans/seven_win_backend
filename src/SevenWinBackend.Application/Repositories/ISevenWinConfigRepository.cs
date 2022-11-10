@@ -11,7 +11,7 @@ namespace SevenWinBackend.Application.Repositories
     /// <summary>
     /// 出7制胜频道配置
     /// </summary>
-    public interface ISevenWinGameChannelRepository: IRepository<SevenWinGameChannel>
+    public interface ISevenWinConfigRepository: IRepository<SevenWinConfig>
     {
 
     }

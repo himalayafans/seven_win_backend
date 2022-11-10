@@ -12,10 +12,6 @@ namespace SevenWinBackend.Application.Data
     public interface IDatabase
     {
         /// <summary>
-        /// 是否存在数据表
-        /// </summary>
-        Task<bool> IsExistTables();
-        /// <summary>
         /// 添加种子数据
         /// </summary>
         Task Seed();

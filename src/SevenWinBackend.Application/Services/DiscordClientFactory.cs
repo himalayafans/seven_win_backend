@@ -14,9 +14,9 @@ namespace SevenWinBackend.Application.Services
 {
     public class DiscordClientFactory : IDiscordClientFactory
     {
-        private readonly AppSettings settings;
+        private readonly OptionSettings settings;
 
-        public DiscordClientFactory(AppSettings settings)
+        public DiscordClientFactory(OptionSettings settings)
         {
             this.settings = settings;
         }

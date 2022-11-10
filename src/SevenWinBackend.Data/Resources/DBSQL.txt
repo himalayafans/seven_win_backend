@@ -1,0 +1,148 @@
+-- account表
+create table account
+(
+    id            uuid primary key,
+    name          varchar(500) not null unique,
+    password_hash varchar(500) not null,
+    role          smallint     not null,
+    created_at    timestamp    not null default current_timestamp,
+    updated_at    timestamp    not null default current_timestamp
+);
+-- channel表
+create table channel
+(
+    id         uuid primary key,
+    guild_id   uuid         not null,
+    discord_id varchar(500) not null unique,
+    name       varchar(500) not null
+);
+create index idx_channel_guild_id on channel using hash (guild_id);
+
+-- config表
+create table config
+(
+    id        uuid primary key,
+    key_name  varchar(500) not null unique,
+    key_value text         not null default ''
+);
+-- discord_image表
+create table discord_image
+(
+    id                uuid primary key,
+    player_id         uuid         not null,
+    discord_url       varchar(500) not null unique default '',
+    discord_file_hash varchar(500) not null        default '',
+    local_file_name   varchar(500) not null        default '',
+    local_file_hash   varchar(500) not null        default '',
+    ocr_text          text         not null        default '',
+    ocr_engine        smallint     not null        default 0,
+    ocr_status        smallint     not null        default 0,
+    created_at        timestamp    not null        default current_timestamp
+);
+create index idx_discord_image_player_id on discord_image using hash (player_id);
+create index idx_discord_image_discord_file_hash on discord_image using hash (discord_file_hash);
+create index idx_discord_image_local_file_name on discord_image using hash (local_file_name);
+create index idx_discord_image_local_file_hash on discord_image using hash (local_file_hash);
+-- guild表
+create table guild
+(
+    id         uuid primary key,
+    discord_id varchar(500) not null unique default '',
+    name       varchar(500) not null        default ''
+);
+-- player表
+create table player
+(
+    id            uuid primary key,
+    discord_id    varchar(500) not null unique default '',
+    display_name  varchar(500) not null        default '',
+    discriminator varchar(500) not null        default '',
+    avatar_id     varchar(500) not null        default '',
+    score         bigint       not null        default 0,
+    created_at    timestamp    not null        default current_timestamp,
+    updated_at    timestamp    not null        default current_timestamp,
+    status        smallint     not null        default 0
+);
+create index idx_player_created_at on player using brin (created_at);
+create index idx_player_updated_at on player using brin (updated_at);
+-- player_game表
+create table player_game
+(
+    id           uuid primary key,
+    player_id    uuid      not null,
+    guild_id     uuid      not null,
+    score        bigint    not null default 0,
+    game_type    smallint  not null default 0,
+    score_detail text      not null default 0,
+    created_at   timestamp not null default current_timestamp,
+    updated_at   timestamp not null default current_timestamp
+);
+create index idx_player_game_player_id on player_game using hash (player_id);
+create index idx_player_game_guild_id on player_game using hash (guild_id);
+create index idx_player_game_score on player_game using brin (score);
+create index idx_player_game_type on player_game using hash (game_type);
+create index idx_player_game_created_at on player_game using brin (created_at);
+create index idx_player_game_updated_at on player_game using brin (updated_at);
+
+-- seven_win_config表
+create table seven_win_config
+(
+    id         uuid primary key,
+    channel_id uuid not null,
+    is_base    bool not null
+);
+create index idx_seven_win_config_channel_id on seven_win_config using hash (channel_id);
+
+-- seven_win_record表
+create table seven_win_record
+(
+    id             uuid primary key,
+    player_game_id uuid      not null,
+    channel_id     uuid      not null,
+    image_id       uuid      not null,
+    is_base        bool      not null,
+    created_at     timestamp not null default current_timestamp
+);
+create index idx_seven_win_record_player_game_id on seven_win_record using hash (player_game_id);
+create index idx_seven_win_record_channel_id on seven_win_record using hash (channel_id);
+create index idx_seven_win_record_image_id on seven_win_record using hash (image_id);
+
+-- seven_win_config_view视图
+create view seven_win_config_view as
+select t.*,
+       c.discord_id as channel_discord_id,
+       c.name       as channel_name,
+       c.guild_id,
+       g.name       as guild_name,
+       g.discord_id as guild_discord_id
+from seven_win_config as t
+         left join channel c on c.id = t.channel_id
+         left join guild g on g.id = c.guild_id;
+
+-- player_game_view视图
+create view player_game_view as
+select pg.*,
+       p.discord_id    as player_discord_id,
+       p.display_name  as player_display_name,
+       p.discriminator as player_discriminator,
+       p.avatar_id     as player_avatar_id,
+       p.status        as player_status,
+       g.discord_id    as guild_discord_id,
+       g.name          as guild_name
+from player_game as pg
+         left join player p on pg.player_id = p.id
+         left join guild g on pg.guild_id = g.id;
+
+-- seven_win_record_view 视图
+create view seven_win_record_view as
+select t.*,
+       pg.player_id,
+       p.display_name  as player_display_name,
+       p.discriminator as player_discriminator,
+       p.avatar_id     as player_avatar_id,
+       c.discord_id    as channel_discord_id,
+       c.name          as channel_name
+from seven_win_record as t
+         left join player_game pg on t.player_game_id = pg.id
+         left join player p on pg.player_id = p.id
+         left join channel c on t.channel_id = c.id;

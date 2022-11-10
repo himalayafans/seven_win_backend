@@ -23,11 +23,11 @@ namespace SevenWinBackend.Application.Services
         protected readonly DiscordClientFactory factory;
         private readonly ILogger<DiscordClientService> logger;
         private readonly CommandService commandService;
-        private readonly AppSettings settings;
+        private readonly OptionSettings settings;
         private readonly SevenWinGameEngine sevenWinGameEngine;
         private readonly DataService dataService;
 
-        public DiscordClientService(DiscordClientFactory factory, ILogger<DiscordClientService> logger, CommandService commandService, AppSettings appSettings, SevenWinGameEngine sevenWinGameEngine, DataService dataService)
+        public DiscordClientService(DiscordClientFactory factory, ILogger<DiscordClientService> logger, CommandService commandService, OptionSettings appSettings, SevenWinGameEngine sevenWinGameEngine, DataService dataService)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));

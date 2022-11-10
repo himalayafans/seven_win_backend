@@ -11,15 +11,15 @@ namespace SevenWinBackend.Application.Repositories
     /// <summary>
     /// 出7制胜游戏记录表
     /// </summary>
-    public interface ISevenWinGameRecordRepository : IRepository<SevenWinGameRecord>
+    public interface ISevenWinRecordRepository : IRepository<SevenWinRecord>
     {
         /// <summary>
         /// 获取指定玩家一分钟内的基础游戏记录
         /// </summary>
-        public Task<SevenWinGameRecord?> GetBaseRecordWithinOneMinute(Player player);
+        public Task<SevenWinRecord?> GetBaseRecordWithinOneMinute(Player player);
         /// <summary>
         /// 获取指定玩家一分钟内的附加游戏记录
         /// </summary>
-        public Task<List<SevenWinGameRecord>> GetAdditionalRecordWithinOneMinute(Player player);
+        public Task<List<SevenWinRecord>> GetAdditionalRecordWithinOneMinute(Player player);
     }
 }

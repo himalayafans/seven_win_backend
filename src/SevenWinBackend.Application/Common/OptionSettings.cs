@@ -10,7 +10,7 @@ namespace SevenWinBackend.Application.Common
     /// <summary>
     /// 应用设置
     /// </summary>
-    public class AppSettings
+    public class OptionSettings
     {
         /// <summary>
         /// Discord Token
@@ -28,12 +28,17 @@ namespace SevenWinBackend.Application.Common
         /// OcrSpace Key
         /// </summary>
         public string OcrSpaceKey { get; }
+        /// <summary>
+        /// 连接字符串
+        /// </summary>
+        public string ConnectionString { get; }
 
-        public AppSettings(IConfiguration config)
+        public OptionSettings(IConfiguration config)
         {
             this.DiscordToken = config.GetValue<string>("Discord:Token");
             this.EnableDiscordProxy = config.GetValue<bool>("Discord:Proxy");
             this.OcrSpaceKey = config.GetValue<string>("OcrSpaceKey");
+            this.ConnectionString = config.GetValue<string>("ConnectionStrings:Default");
             BotEnabled = true;
         }
     }

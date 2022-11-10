@@ -11,7 +11,7 @@ namespace SevenWinBackend.Domain.Entities
     /// <summary>
     /// Discord图片
     /// </summary>
-    public class DiscordImage : BaseEntity
+    public class Image : BaseEntity
     {
         /// <summary>
         /// 上传者ID
@@ -24,7 +24,7 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// 原始文件哈希值
         /// </summary>
-        public string OriginalFileHash { get; set; } = string.Empty;
+        public string DiscordFileHash { get; set; } = string.Empty;
         /// <summary>
         /// 本地文件名称
         /// </summary>
@@ -52,7 +52,7 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// 创建Discord图片
         /// </summary>
-        public static DiscordImage Create(Guid playerId, string discordUrl, string discordFileHash)
+        public static Image Create(Guid playerId, string discordUrl, string discordFileHash)
         {
             if (playerId == Guid.Empty)
             {
@@ -66,12 +66,12 @@ namespace SevenWinBackend.Domain.Entities
             {
                 throw new ArgumentNullException(nameof(discordFileHash));
             }
-            return new DiscordImage()
+            return new Image()
             {
                 Id = Guid.NewGuid(),
                 PlayerId = playerId,
                 DiscordUrl = discordUrl,               
-                OriginalFileHash = discordFileHash,
+                DiscordFileHash = discordFileHash,
                 CreatedAt = DateTime.Now
             };
         }

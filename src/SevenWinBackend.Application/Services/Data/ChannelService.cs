@@ -13,11 +13,13 @@ public class ChannelService
     }
 
     /// <summary>
-    /// 获取所有出7制胜频道
+    /// 获取所有出7制胜频道配置
     /// </summary>
-    public Task<List<SevenWinGameChannelView>> GetSevenWinGameChannels()
+    /// <param name="guildDiscordId">服务器Discord ID</param>
+    /// <returns></returns>
+    public Task<List<SevenWinConfigView>> GetSevenWinConfigViews(string guildDiscordId)
     {
         using IUnitOfWork work = unitOfWorkFactory.Create();
-        return work.SevenWinGameChannelView.GetAllChannels();
+        return work.SevenWinConfigView.GetConfigViews(guildDiscordId);
     }
 }

@@ -21,11 +21,12 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
             var services = context.ServiceProvider;
             string userDiscordId = context.SocketUserMessage.Author.Id.ToString();
             string channelDiscordId = context.SocketUserMessage.Channel.Id.ToString();
+            string guildId = context.GetGuildDiscordId().ToString();
             // 设置上下文缓存
             ChannelService channelService = services.GetRequiredService<ChannelService>();
-            List<SevenWinGameChannelView> channelViews = await channelService.GetSevenWinGameChannels();
+            List<SevenWinConfigView> channelViews = await channelService.GetSevenWinConfigViews(guildId);
             context.Cache.Channels = channelViews;
-            SevenWinGameChannelView? channelView = channelViews.FirstOrDefault(p => p.DiscordId == channelDiscordId);
+            SevenWinConfigView? channelView = channelViews.FirstOrDefault(p => p.ChanneDiscordId == channelDiscordId);
             //检查是否是参与游戏的频道
             if (channelView != null) // 是
             {
@@ -36,7 +37,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
 
             // TODO: 待删除
             //检查是否是参与游戏的频道，不是则忽略消息
-            if (channelViews.Exists(p => p.DiscordId == userDiscordId.ToString()))
+            if (channelViews.Exists(p => p.ChanneDiscordId == userDiscordId.ToString()))
             {
                 // 获取基础游戏记录
                 SevenWinGameService sevenWinGameService = services.GetRequiredService<SevenWinGameService>();
@@ -51,7 +52,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 if (baseGameRecord == null)   // 如果用户在一分钟内没有参与基础游戏
                 {
                     // 如果用户当前游戏频道是基础频道
-                    if (baseChannel.DiscordId == channelDiscordId.ToString())
+                    if (baseChannel.ChanneDiscordId == channelDiscordId.ToString())
                     {
                         // 用户在规定时间内首次参与基础游戏
                         await (Successor?.Handle(context) ?? Task.CompletedTask);
@@ -64,7 +65,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 }
                 else   // 如果用户在一分钟内参与过基础游戏
                 {
-                    if (baseChannel.DiscordId == channelDiscordId) // 如果参与的频道是基础游戏频道
+                    if (baseChannel.ChanneDiscordId == channelDiscordId) // 如果参与的频道是基础游戏频道
                     {
                         context.PlayResult.AddMessage("请勿在规定时间内重复参与基础游戏");
                     }

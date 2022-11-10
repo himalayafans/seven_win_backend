@@ -31,7 +31,7 @@ public class Player : BaseEntity
     /// <summary>
     /// 积分总数（即玉米数）
     /// </summary>
-    public decimal Score { get; set; } = 0;
+    public int Score { get; set; } = 0;
 
     /// <summary>
     /// 创建时间
@@ -69,13 +69,26 @@ public class Player : BaseEntity
         {
             throw new ArgumentNullException(nameof(discriminator));
         }
+        DateTime now = DateTime.Now;
         return new Player()
         {
             Id = Guid.NewGuid(),
             DisplayName = displayName,
             Discriminator = discriminator,
             AvatarId = avatarId,
-            DiscordId = discordId
+            DiscordId = discordId,
+            Score = 0,
+            CreatedAt = now,
+            UpdatedAt = now,
+            Status = PlayerStatus.Enable
         };
+    }
+    /// <summary>
+    /// 设置积分
+    /// </summary>
+    public void SetScore(int score)
+    {
+        this.Score = score;
+        this.UpdatedAt = DateTime.Now;
     }
 }

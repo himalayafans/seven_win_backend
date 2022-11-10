@@ -25,6 +25,14 @@ namespace SevenWinBackend.Application.Data
         /// </summary>
         void Rollback();
         /// <summary>
+        /// 执行SQL语句
+        /// </summary>
+        Task ExecuteAsync(string sql, params object[] args);
+        /// <summary>
+        /// 执行获取标量
+        /// </summary>
+        Task<T> ExecuteScalarAsync<T>(string sql, params object[] args);
+        /// <summary>
         /// 登录账户
         /// </summary>
         IAccountRepository Account { get; }
@@ -59,18 +67,18 @@ namespace SevenWinBackend.Application.Data
         /// <summary>
         /// 出7制胜频道配置
         /// </summary>
-        ISevenWinGameChannelRepository SevenWinGameChannel { get; }
+        ISevenWinConfigRepository SevenWinGameChannel { get; }
         /// <summary>
         /// 出7制胜频道配置视图
         /// </summary>
-        ISevenWinGameChannelViewRepository SevenWinGameChannelView { get; }
+        ISevenWinConfigViewRepository SevenWinConfigView { get; }
         /// <summary>
         /// 出7制胜游戏记录
         /// </summary>
-        ISevenWinGameRecordViewRepository SevenWinGameRecordView { get; }
+        ISevenWinRecordViewRepository SevenWinGameRecordView { get; }
         /// <summary>
         /// 出7制胜游戏记录
         /// </summary>
-        ISevenWinGameRecordRepository SevenWinGameRecord { get; }
+        ISevenWinRecordRepository SevenWinGameRecord { get; }
     }
 }

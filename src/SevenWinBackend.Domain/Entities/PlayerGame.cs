@@ -17,6 +17,10 @@ namespace SevenWinBackend.Domain.Entities;
 public class PlayerGame : BaseEntity
 {
     /// <summary>
+    /// 服务器ID
+    /// </summary>
+    public Guid GuildId { get; set; }
+    /// <summary>
     /// 玩家ID
     /// </summary>
     public Guid PlayerId { get; set; }
@@ -35,24 +39,29 @@ public class PlayerGame : BaseEntity
     /// <summary>
     /// 创建时间
     /// </summary>
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.MinValue;
     /// <summary>
     /// 更新时间
     /// </summary>
-    public DateTime UpdatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; } = DateTime.MinValue;
 
     /// <summary>
     /// 创建玩家游戏
     /// </summary>
     /// <param name="playerId">玩家ID</param>
+    /// <param name="guildId">服务器ID</param>
     /// <param name="score">积分小计</param>
     /// <param name="type">游戏类型</param>
     /// <param name="scoreDetail">积分明细</param>
-    public static PlayerGame Create(Guid playerId, int score, GameTypes type, IScoreDetail scoreDetail)
+    public static PlayerGame Create(Guid playerId, Guid guildId, int score, GameTypes type, IScoreDetail scoreDetail)
     {
         if (playerId == Guid.Empty)
         {
             throw new ArgumentNullException(nameof(playerId));
+        }
+        if (guildId == Guid.Empty)
+        {
+            throw new ArgumentNullException(nameof(guildId));
         }
         if (scoreDetail == null)
         {
@@ -67,6 +76,7 @@ public class PlayerGame : BaseEntity
         {
             Id = Guid.NewGuid(),
             PlayerId = playerId,
+            GuildId = guildId,
             Score = score,
             GameType = type,
             ScoreDetail = JsonHelper.Serialize(scoreDetail),
