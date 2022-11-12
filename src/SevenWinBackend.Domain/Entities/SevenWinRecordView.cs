@@ -60,5 +60,17 @@ namespace SevenWinBackend.Domain.Entities
         /// 频道discord名称
         /// </summary>
         public string ChannelName { get; set; } = string.Empty;
+        /// <summary>
+        /// 服务器ID
+        /// </summary>
+        public Guid GuildId { get; set; }
+        /// <summary>
+        /// 服务器Discord ID
+        /// </summary>
+        public string GuildDiscordId { get; set; } = string.Empty;
+        /// <summary>
+        /// 服务器名称
+        /// </summary>
+        public string GuildName { get; set;} = string.Empty;
     }
 }

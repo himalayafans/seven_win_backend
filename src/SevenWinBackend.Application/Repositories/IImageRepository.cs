@@ -11,11 +11,11 @@ namespace SevenWinBackend.Application.Repositories
     /// <summary>
     /// discord图片储存库
     /// </summary>
-    public interface IDiscordImageRepository : IRepository<Image>
+    public interface IImageRepository : IRepository<Image>
     {
         /// <summary>
         /// 通过Discord文件哈希值获取图片
         /// </summary>
-        Task<Image> GetOriginalFileHash(string fileHash);
+        Task<Image?> GetOriginalFileHash(string fileHash);
     }
 }

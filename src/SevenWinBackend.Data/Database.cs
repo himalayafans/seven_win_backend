@@ -43,12 +43,12 @@ namespace SevenWinBackend.Data
                 Console.WriteLine("Create data table completed successfully.");
                 // 创建管理员
                 Account account = Account.Create("admin", "123456", Domain.Enums.RolesType.Admin);
-                await work.Account.Add(account);
+                await work.Account.Insert(account);
                 // 创建配置
                 Config appIdConfig = Config.Create(ConfigKeyNames.AppId, Constants.AppId);
-                await work.Config.Add(appIdConfig);
+                await work.Config.Insert(appIdConfig);
                 Config dbVersionConfig = Config.Create(ConfigKeyNames.DbVersion, new Version(1, 0).ToString());
-                await work.Config.Add(dbVersionConfig);
+                await work.Config.Insert(dbVersionConfig);
                 Console.WriteLine("Seeding the database completed successfully!");
             }
             catch (Exception)

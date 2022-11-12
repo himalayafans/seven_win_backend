@@ -18,7 +18,7 @@ namespace SevenWinBackend.Application.Repositories
         /// <summary>
         /// 获取数据库版本
         /// </summary>
-        public Version GetDbVersion();
+        public Task<Version> GetDbVersion();
         /// <summary>
         /// 设置数据库版本
         /// </summary>

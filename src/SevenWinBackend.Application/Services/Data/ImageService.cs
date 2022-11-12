@@ -15,9 +15,9 @@ public class ImageService
     /// <summary>
     /// 通过原始文件哈希值获取图片
     /// </summary>
-    public async Task<Image> GetWithOriginalFileHash(string hash)
+    public async Task<Image?> GetWithOriginalFileHash(string hash)
     {
         using var work = unitOfWorkFactory.Create();
-        return await work.DiscordImage.GetOriginalFileHash(hash);
+        return await work.Image.GetOriginalFileHash(hash);
     }
 }

@@ -47,7 +47,7 @@ namespace SevenWinBackend.Application.Data
         /// <summary>
         /// Discord图片
         /// </summary>
-        IDiscordImageRepository DiscordImage { get; }
+        IImageRepository Image { get; }
         /// <summary>
         /// Discord服务器
         /// </summary>
@@ -67,7 +67,7 @@ namespace SevenWinBackend.Application.Data
         /// <summary>
         /// 出7制胜频道配置
         /// </summary>
-        ISevenWinConfigRepository SevenWinGameChannel { get; }
+        ISevenWinConfigRepository SevenWinConfig { get; }
         /// <summary>
         /// 出7制胜频道配置视图
         /// </summary>
@@ -75,10 +75,10 @@ namespace SevenWinBackend.Application.Data
         /// <summary>
         /// 出7制胜游戏记录
         /// </summary>
-        ISevenWinRecordViewRepository SevenWinGameRecordView { get; }
+        ISevenWinRecordViewRepository SevenWinRecordView { get; }
         /// <summary>
         /// 出7制胜游戏记录
         /// </summary>
-        ISevenWinRecordRepository SevenWinGameRecord { get; }
+        ISevenWinRecordRepository SevenWinRecord { get; }
     }
 }

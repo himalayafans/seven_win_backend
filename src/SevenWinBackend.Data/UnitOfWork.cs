@@ -1,6 +1,7 @@
 ﻿using PetaPoco;
 using SevenWinBackend.Application.Data;
 using SevenWinBackend.Application.Repositories;
+using SevenWinBackend.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,35 +17,47 @@ namespace SevenWinBackend.Data
         internal UnitOfWork(PetaPoco.IDatabase db)
         {
             this.db = db ?? throw new ArgumentNullException(nameof(db));
+            this.Account = new AccountRepository(db);
+            this.Channel = new ChannelRepository(db);
+            this.Config = new ConfigRepository(db);
+            this.Image = new ImageRepository(db);
+            this.Guild = new GuildRepository(db);
+            this.Player = new PlayerRepository(db);
+            this.PlayerGame = new PlayerGameRepository(db);
+            this.PlayerGameView = new PlayerGameViewRepository(db);
+            this.SevenWinConfig = new SevenWinConfigRepository(db);
+            this.SevenWinConfigView = new SevenWinConfigViewRepository(db);
+            this.SevenWinRecord = new SevenWinRecordRepository(db);
+            this.SevenWinRecordView = new SevenWinRecordViewRepository(db);
         }
 
-        public IAccountRepository Account => throw new NotImplementedException();
+        public IAccountRepository Account { get; }
 
-        public IChannelRepository Channel => throw new NotImplementedException();
+        public IChannelRepository Channel { get; }
 
-        public IConfigRepository Config => throw new NotImplementedException();
+        public IConfigRepository Config { get; }
 
-        public IDiscordImageRepository DiscordImage => throw new NotImplementedException();
+        public IImageRepository Image { get; }
 
-        public IGuildRepository Guild => throw new NotImplementedException();
+        public IGuildRepository Guild { get; }
 
-        public IPlayerGameRepository PlayerGame => throw new NotImplementedException();
+        public IPlayerGameRepository PlayerGame { get; }
 
-        public IPlayerGameViewRepository PlayerGameView => throw new NotImplementedException();
+        public IPlayerGameViewRepository PlayerGameView { get; }
 
-        public IPlayerRepository Player => throw new NotImplementedException();
+        public IPlayerRepository Player { get; }
 
-        public ISevenWinConfigRepository SevenWinGameChannel => throw new NotImplementedException();
+        public ISevenWinConfigRepository SevenWinConfig { get; }
 
-        public ISevenWinConfigViewRepository SevenWinConfigView => throw new NotImplementedException();
+        public ISevenWinConfigViewRepository SevenWinConfigView { get; }
 
-        public ISevenWinRecordViewRepository SevenWinGameRecordView => throw new NotImplementedException();
+        public ISevenWinRecordViewRepository SevenWinRecordView { get; }
 
-        public ISevenWinRecordRepository SevenWinGameRecord => throw new NotImplementedException();
+        public ISevenWinRecordRepository SevenWinRecord { get; }
 
         public void BeginTransaction()
         {
-            throw new NotImplementedException();
+            this.db.BeginTransaction();
         }
         public async Task ExecuteAsync(string sql, params object[] args)
         {
@@ -53,7 +66,7 @@ namespace SevenWinBackend.Data
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            this.db.CompleteTransaction();
         }
 
         public void Dispose()
@@ -63,7 +76,7 @@ namespace SevenWinBackend.Data
 
         public void Rollback()
         {
-            throw new NotImplementedException();
+            this.db.AbortTransaction();
         }
 
         public async Task<T> ExecuteScalarAsync<T>(string sql, params object[] args)

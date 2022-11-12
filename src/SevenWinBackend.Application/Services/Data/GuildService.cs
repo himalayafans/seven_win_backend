@@ -25,7 +25,7 @@ namespace SevenWinBackend.Application.Services.Data
         public async Task<Guild?> GetByDiscordId(ulong discordId)
         {
             using var work = this.unitOfWorkFactory.Create();
-            return await work.Guild.GetByDiscordId(discordId);
+            return await work.Guild.GetByDiscordId(discordId.ToString());
         }
         /// <summary>
         /// 插入服务器数据
@@ -33,7 +33,7 @@ namespace SevenWinBackend.Application.Services.Data
         public async Task Insert(Guild guild)
         {
             using var work = this.unitOfWorkFactory.Create();
-            await work.Guild.Add(guild);
+            await work.Guild.Insert(guild);
         }
     }
 }

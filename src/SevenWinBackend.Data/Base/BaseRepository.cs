@@ -18,27 +18,27 @@ namespace SevenWinBackend.Data.Base
             Db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task Add(T entity)
+        public virtual async Task Insert(T entity)
         {
             await this.Db.InsertAsync(entity);
         }
 
-        public async Task Delete(Guid id)
+        public virtual async Task Delete(Guid id)
         {
             await this.Db.DeleteAsync<T>(id);
         }
 
-        public async Task<List<T>> GetAll()
+        public virtual async Task<List<T>> GetAll()
         {
             return await this.Db.FetchAsync<T>();
         }
 
-        public async Task<T> GetById(Guid id)
+        public virtual async Task<T?> GetById(Guid id)
         {
-            return await this.Db.SingleOrDefaultAsync<T>(id);
+            return await this.Db.SingleOrDefaultAsync<T?>(id);
         }
 
-        public async Task Update(T entity)
+        public virtual async Task Update(T entity)
         {
             await this.Db.UpdateAsync(entity);
         }

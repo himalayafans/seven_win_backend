@@ -30,7 +30,7 @@ namespace SevenWinBackend.Application.Services.Data
                 var w = work;
                 foreach (var discordGuild in client.Guilds)
                 {
-                    Guild? guild = await work.Guild.GetByDiscordId(discordGuild.Id);
+                    Guild? guild = await work.Guild.GetByDiscordId(discordGuild.Id.ToString());
                     if (guild == null)
                     {
                         // 如果服务器不存在，则插入到数据库
@@ -48,11 +48,11 @@ namespace SevenWinBackend.Application.Services.Data
                     List<Channel> channels = await work.Channel.GetAll();
                     foreach (var discordChannel in discordGuild.Channels)
                     {
-                        var channel = await work.Channel.GetByDiscordId(discordChannel.Id);
+                        var channel = await work.Channel.GetByDiscordId(discordChannel.Id.ToString());
                         if (channel == null)
                         {
                             // 如果频道不存在，则插入数据库
-                            await work.Channel.Add(Channel.Create(guild.Id, discordGuild.Id.ToString(), discordChannel.Name));
+                            await work.Channel.Insert(Channel.Create(guild.Id, discordGuild.Id.ToString(), discordChannel.Name));
                         }
                         else
                         {

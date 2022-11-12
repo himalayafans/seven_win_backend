@@ -11,7 +11,6 @@ namespace SevenWinBackend.Application.Repositories
 {
     public interface IPlayerGameViewRepository
     {
-        Task<PlayerGameView> GetPlayerGameViewAsync();
         Task<PageResult<PlayerGameView>> Search(IQueryOptions options);
     }
 }

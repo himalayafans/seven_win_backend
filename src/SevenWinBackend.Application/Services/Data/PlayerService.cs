@@ -34,7 +34,7 @@ namespace SevenWinBackend.Application.Services.Data
             if (player == null)
             {
                 player = Player.Create(user.Id.ToString(), user.DisplayName, user.Discriminator, user.AvatarId);
-                await work.Player.Add(player);
+                await work.Player.Insert(player);
             }
             return player;
         }

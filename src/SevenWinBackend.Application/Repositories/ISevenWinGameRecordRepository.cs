@@ -13,13 +13,5 @@ namespace SevenWinBackend.Application.Repositories
     /// </summary>
     public interface ISevenWinRecordRepository : IRepository<SevenWinRecord>
     {
-        /// <summary>
-        /// 获取指定玩家一分钟内的基础游戏记录
-        /// </summary>
-        public Task<SevenWinRecord?> GetBaseRecordWithinOneMinute(Player player);
-        /// <summary>
-        /// 获取指定玩家一分钟内的附加游戏记录
-        /// </summary>
-        public Task<List<SevenWinRecord>> GetAdditionalRecordWithinOneMinute(Player player);
     }
 }

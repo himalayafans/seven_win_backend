@@ -17,10 +17,10 @@ namespace SevenWinBackend.Application.Repositories
         /// <summary>
         /// 通过discord ID获取频道
         /// </summary>
-        public Task<Channel> GetByDiscordId(ulong discordId);
+        public Task<Channel?> GetByDiscordId(string discordId);
         /// <summary>
         /// 判断Discord频道是否存在
         /// </summary>
-        public Task<bool> Contains(ulong discordId);
+        public Task<bool> Contains(string discordId);
     }
 }

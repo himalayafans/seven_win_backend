@@ -17,27 +17,31 @@ public class SevenWinGameService
     /// <summary>
     /// 获取一分钟内的基础游戏记录
     /// </summary>
-    public async Task<SevenWinRecordView?> GetBaseGameInOneMinute(string discordUserId)
+    public async Task<SevenWinRecordView?> GetBaseGameInOneMinute(string discordUserId, string guildDiscordId)
     {
         if (string.IsNullOrWhiteSpace(discordUserId))
         {
             throw new ArgumentNullException(nameof(discordUserId));
         }
+        if (string.IsNullOrWhiteSpace(guildDiscordId))
+        {
+            throw new ArgumentNullException(nameof(guildDiscordId));
+        }
         using var work = unitOfWorkFactory.Create();
-        return await work.SevenWinGameRecordView.GetBaseGameInOneMinute(discordUserId);
+        return await work.SevenWinRecordView.GetBaseGameInOneMinute(discordUserId, guildDiscordId);
     }
 
     /// <summary>
     /// 获取1分钟内的附加游戏记录
     /// </summary>
-    public async Task<List<SevenWinRecordView>> GetAdditionalGamesInOneMinute(string discordUserId)
+    public async Task<List<SevenWinRecordView>> GetAdditionalGamesInOneMinute(string discordUserId, string guildDiscordId)
     {
         if (string.IsNullOrWhiteSpace(discordUserId))
         {
             throw new ArgumentNullException(nameof(discordUserId));
         }
         using var work = unitOfWorkFactory.Create();
-        return await work.SevenWinGameRecordView.GetAdditionalGamesInOneMinute(discordUserId);
+        return await work.SevenWinRecordView.GetAdditionalGamesInOneMinute(discordUserId, guildDiscordId);
     }
     /// <summary>
     /// 创建未完成的游戏记录
@@ -58,7 +62,7 @@ public class SevenWinGameService
         }
         using var work = unitOfWorkFactory.Create();
         var record = SevenWinRecord.Create(playerGameId, channelId, discordImageId, isBase);
-        await work.SevenWinGameRecord.Add(record);
+        await work.SevenWinRecord.Insert(record);
         return record;
     }
 }

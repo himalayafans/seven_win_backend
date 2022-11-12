@@ -22,11 +22,11 @@ create index idx_channel_guild_id on channel using hash (guild_id);
 create table config
 (
     id        uuid primary key,
-    key_name  varchar(500) not null unique,
-    key_value text         not null default ''
+    key_name  smallint not null unique,
+    key_value text     not null default ''
 );
 -- discord_image表
-create table discord_image
+create table image
 (
     id                uuid primary key,
     player_id         uuid         not null,
@@ -39,10 +39,10 @@ create table discord_image
     ocr_status        smallint     not null        default 0,
     created_at        timestamp    not null        default current_timestamp
 );
-create index idx_discord_image_player_id on discord_image using hash (player_id);
-create index idx_discord_image_discord_file_hash on discord_image using hash (discord_file_hash);
-create index idx_discord_image_local_file_name on discord_image using hash (local_file_name);
-create index idx_discord_image_local_file_hash on discord_image using hash (local_file_hash);
+create index idx_image_player_id on image using hash (player_id);
+create index idx_image_discord_file_hash on image using hash (discord_file_hash);
+create index idx_image_local_file_name on image using hash (local_file_name);
+create index idx_image_local_file_hash on image using hash (local_file_hash);
 -- guild表
 create table guild
 (
@@ -140,9 +140,14 @@ select t.*,
        p.display_name  as player_display_name,
        p.discriminator as player_discriminator,
        p.avatar_id     as player_avatar_id,
+       p.discord_id    as player_discord_id,
        c.discord_id    as channel_discord_id,
-       c.name          as channel_name
+       c.name          as channel_name,
+       g.id            as guild_id,
+       g.discord_id    as guild_discord_id,
+       g.name          as guild_name
 from seven_win_record as t
          left join player_game pg on t.player_game_id = pg.id
          left join player p on pg.player_id = p.id
-         left join channel c on t.channel_id = c.id;
+         left join channel c on t.channel_id = c.id
+         left join guild g on g.id = c.guild_id;

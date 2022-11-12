@@ -21,10 +21,10 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
             var services = context.ServiceProvider;
             string userDiscordId = context.SocketUserMessage.Author.Id.ToString();
             string channelDiscordId = context.SocketUserMessage.Channel.Id.ToString();
-            string guildId = context.GetGuildDiscordId().ToString();
+            string guildDiscordId = context.GetGuildDiscordId().ToString();
             // 设置上下文缓存
             ChannelService channelService = services.GetRequiredService<ChannelService>();
-            List<SevenWinConfigView> channelViews = await channelService.GetSevenWinConfigViews(guildId);
+            List<SevenWinConfigView> channelViews = await channelService.GetSevenWinConfigViews(guildDiscordId);
             context.Cache.Channels = channelViews;
             SevenWinConfigView? channelView = channelViews.FirstOrDefault(p => p.ChanneDiscordId == channelDiscordId);
             //检查是否是参与游戏的频道
@@ -42,7 +42,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 // 获取基础游戏记录
                 SevenWinGameService sevenWinGameService = services.GetRequiredService<SevenWinGameService>();
                 // 用户在一分钟内参与的基础游戏
-                var baseGameRecord = await sevenWinGameService.GetBaseGameInOneMinute(userDiscordId);
+                var baseGameRecord = await sevenWinGameService.GetBaseGameInOneMinute(userDiscordId, guildDiscordId);
                 // 基础游戏频道
                 var baseChannel = channelViews.FirstOrDefault(p => p.IsBase);
                 if (baseChannel == null)
@@ -72,7 +72,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                     else // // 如果参与的频道是附加游戏频道
                     {
                         // 用户在1分钟内参与的附加游戏频道
-                        var list = await sevenWinGameService.GetAdditionalGamesInOneMinute(userDiscordId);
+                        var list = await sevenWinGameService.GetAdditionalGamesInOneMinute(userDiscordId, guildDiscordId);
                         if (list.Count >= 6) //如果用户已参与了6个附加频道
                         {
                             context.PlayResult.AddMessage("您已完成本轮游戏，请勿重复发帖");

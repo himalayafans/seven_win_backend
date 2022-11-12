@@ -13,6 +13,6 @@ namespace SevenWinBackend.Application.Repositories
     /// </summary>
     public interface IAccountRepository : IRepository<Account>
     {
-        Task<Account?> GetByNameAsync(string name);
+        Task<Account?> GetByName(string name);
     }
 }
