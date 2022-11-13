@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SevenWinBackend.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,10 @@ namespace SevenWinBackend.Application.Services
         /// OCR引擎名称
         /// </summary>
         public string GetName();
+
+        /// <summary>
+        /// 反序列化Ocr文本
+        /// </summary>
+        public IOcrResult Convert(OcrEngineType engineType, string ocrText);
     }
 }

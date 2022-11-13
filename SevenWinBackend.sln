@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevenWinBackend.Domain", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevenWinBackend.Application", "src\SevenWinBackend.Application\SevenWinBackend.Application.csproj", "{66A8ED9B-D273-45DF-A9C5-8AE413409801}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenWinBackend.Data", "src\SevenWinBackend.Data\SevenWinBackend.Data.csproj", "{076886B1-72A0-4E87-B3E9-8ACB8F44C111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevenWinBackend.Data", "src\SevenWinBackend.Data\SevenWinBackend.Data.csproj", "{076886B1-72A0-4E87-B3E9-8ACB8F44C111}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenWinBackend.OcrSpace", "src\SevenWinBackend.OcrSpace\SevenWinBackend.OcrSpace.csproj", "{4C6FFFE3-1BA8-450A-87F9-BB6DEE385811}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{076886B1-72A0-4E87-B3E9-8ACB8F44C111}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{076886B1-72A0-4E87-B3E9-8ACB8F44C111}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{076886B1-72A0-4E87-B3E9-8ACB8F44C111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C6FFFE3-1BA8-450A-87F9-BB6DEE385811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C6FFFE3-1BA8-450A-87F9-BB6DEE385811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C6FFFE3-1BA8-450A-87F9-BB6DEE385811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C6FFFE3-1BA8-450A-87F9-BB6DEE385811}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
