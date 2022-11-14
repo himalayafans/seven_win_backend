@@ -17,17 +17,12 @@ namespace SevenWinBackend.OcrSpace
             OcrResponse = ocrResponse ?? throw new ArgumentNullException(nameof(ocrResponse));
         }
 
-        string IOcrResult.GeMinute()
+        string IOcrResult.GetText()
         {
             throw new NotImplementedException();
         }
 
         string IOcrResult.GetPrice()
-        {
-            throw new NotImplementedException();
-        }
-
-        string IOcrResult.GetText()
         {
             throw new NotImplementedException();
         }

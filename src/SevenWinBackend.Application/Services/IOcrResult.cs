@@ -20,11 +20,6 @@ namespace SevenWinBackend.Application.Services
         /// </summary>
         public string GetPrice();
         /// <summary>
-        /// 获取图片中的时间(分)
-        /// </summary>
-        /// <returns></returns>
-        public string GeMinute();
-        /// <summary>
         /// 是否包含指定文本
         /// </summary>
         public bool IsContainText(string text);

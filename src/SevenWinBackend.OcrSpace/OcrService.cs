@@ -10,6 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/****************************************
+ * OcrSpace是图片识别的服务提供商 https://ocr.space/
+ ***************************************/
+
 namespace SevenWinBackend.OcrSpace
 {
     public class OcrService : IOcrService
