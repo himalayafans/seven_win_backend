@@ -25,14 +25,6 @@ namespace SevenWinBackend.Application.Data
         /// </summary>
         void Rollback();
         /// <summary>
-        /// 执行SQL语句
-        /// </summary>
-        Task ExecuteAsync(string sql, params object[] args);
-        /// <summary>
-        /// 执行获取标量
-        /// </summary>
-        Task<T> ExecuteScalarAsync<T>(string sql, params object[] args);
-        /// <summary>
         /// 登录账户
         /// </summary>
         IAccountRepository Account { get; }
@@ -80,5 +72,9 @@ namespace SevenWinBackend.Application.Data
         /// 出7制胜游戏记录
         /// </summary>
         ISevenWinRecordRepository SevenWinRecord { get; }
+        /// <summary>
+        /// 数据库
+        /// </summary>
+        IDatabaseRepository Database { get; }
     }
 }

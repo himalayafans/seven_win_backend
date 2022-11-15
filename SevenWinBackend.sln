@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevenWinBackend.Application
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevenWinBackend.Data", "src\SevenWinBackend.Data\SevenWinBackend.Data.csproj", "{076886B1-72A0-4E87-B3E9-8ACB8F44C111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenWinBackend.OcrSpace", "src\SevenWinBackend.OcrSpace\SevenWinBackend.OcrSpace.csproj", "{4C6FFFE3-1BA8-450A-87F9-BB6DEE385811}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevenWinBackend.OcrSpace", "src\SevenWinBackend.OcrSpace\SevenWinBackend.OcrSpace.csproj", "{4C6FFFE3-1BA8-450A-87F9-BB6DEE385811}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

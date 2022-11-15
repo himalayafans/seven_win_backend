@@ -29,6 +29,7 @@ namespace SevenWinBackend.Data
             this.SevenWinConfigView = new SevenWinConfigViewRepository(db);
             this.SevenWinRecord = new SevenWinRecordRepository(db);
             this.SevenWinRecordView = new SevenWinRecordViewRepository(db);
+            this.Database = new DatabaseRepository(db);
         }
 
         public IAccountRepository Account { get; }
@@ -54,6 +55,7 @@ namespace SevenWinBackend.Data
         public ISevenWinRecordViewRepository SevenWinRecordView { get; }
 
         public ISevenWinRecordRepository SevenWinRecord { get; }
+        public IDatabaseRepository Database { get; }
 
         public void BeginTransaction()
         {
