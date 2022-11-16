@@ -38,6 +38,5 @@ namespace SevenWinBackend.Data
                     .Create();
             return db;
         }
-
     }
 }
