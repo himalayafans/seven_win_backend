@@ -36,7 +36,7 @@ namespace SevenWinBackend.DataTests
 
         public void Dispose()
         {
-            using var db = unitOfWorkFactory.Create();
+            using var db = unitOfWorkFactory.Create();          
             db.Database.DeleteTables().GetAwaiter().GetResult();
         }
     }

@@ -21,6 +21,7 @@
 	<ItemGroup>
 		<PackageReference Include="Npgsql" Version="7.0.0" />
 		<PackageReference Include="PetaPoco.Compiled" Version="6.0.532" />
+		<PackageReference Include="PetaPoco.SqlKata" Version="2.1.11" />
 	</ItemGroup>
 
 	<ItemGroup>

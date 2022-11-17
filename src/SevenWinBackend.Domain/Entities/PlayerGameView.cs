@@ -57,6 +57,10 @@ public class PlayerGameView : BaseView
     /// </summary>
     public string PlayerDiscriminator { get; set; } = String.Empty;
     /// <summary>
+    /// 玩家完整discord名称（名称+标识符）
+    /// </summary>
+    public string PlayerFullName { get; set; } = string.Empty;
+    /// <summary>
     /// 头像ID
     /// </summary>
     public string PlayerAvatarId { get; set; } = String.Empty;

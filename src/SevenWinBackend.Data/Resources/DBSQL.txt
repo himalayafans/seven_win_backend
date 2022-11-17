@@ -122,13 +122,14 @@ from seven_win_config as t
 -- player_game_view视图
 create view player_game_view as
 select pg.*,
-       p.discord_id    as player_discord_id,
-       p.display_name  as player_display_name,
-       p.discriminator as player_discriminator,
-       p.avatar_id     as player_avatar_id,
-       p.status        as player_status,
-       g.discord_id    as guild_discord_id,
-       g.name          as guild_name
+       p.discord_id                                 as player_discord_id,
+       p.display_name                               as player_display_name,
+       p.discriminator                              as player_discriminator,
+       p.avatar_id                                  as player_avatar_id,
+       p.status                                     as player_status,
+       concat(p.display_name, ':', p.discriminator) as player_full_name,
+       g.discord_id                                 as guild_discord_id,
+       g.name                                       as guild_name
 from player_game as pg
          left join player p on pg.player_id = p.id
          left join guild g on pg.guild_id = g.id;

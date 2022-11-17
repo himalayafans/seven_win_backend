@@ -29,8 +29,20 @@ namespace SevenWinBackend.Application.Interfaces
         /// </summary>
         string? SearchValue { get; }
         /// <summary>
-        /// 排序
+        /// 是否升序排列
         /// </summary>
-        SortDescriptor? Sort { get; }
+        bool? IsSortAscending { get; set; }
+        /// <summary>
+        /// 排序列
+        /// </summary>
+        string? SortBy { get; set; }
+        /// <summary>
+        /// 起始时间（时间戳）
+        /// </summary>
+        long? StartTime { get; set; }
+        /// <summary>
+        /// 截至时间（时间戳）
+        /// </summary>
+        long? EndTime { get; set; }
     }
 }

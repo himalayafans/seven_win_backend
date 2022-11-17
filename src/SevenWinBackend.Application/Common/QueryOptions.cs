@@ -12,9 +12,11 @@ namespace SevenWinBackend.Application.Common
     {
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        public string? SearchType { get; set; } = string.Empty;
-        public string? SearchValue { get; set; } = string.Empty;
-
-        public SortDescriptor? Sort { get; set; } = null;
+        public string? SearchType { get; set; } = null;
+        public string? SearchValue { get; set; } = null;
+        public bool? IsSortAscending { get; set; } = null;
+        public string? SortBy { get; set; } = null;
+        long? IQueryOptions.StartTime { get; set; } = null;
+        long? IQueryOptions.EndTime { get; set; } = null;
     }
 }
