@@ -28,9 +28,27 @@ namespace SevenWinBackend.Data.Repositories
             return await this.Db.SingleOrDefaultAsync<Player?>(sql, new { DiscordId = discordId });
         }
 
-        public Task<PageResult<Player>> Search(IQueryOptions options)
+        public async Task<PageResult<Player>> Search(IQueryOptions options)
         {
-            throw new NotImplementedException();
+            if (options.PageSize < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(options.PageSize));
+            }
+            if (options.Page < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(options.Page));
+            }
+            SqlBuilder sql = new SqlBuilder();
+            sql.AppendToEnd("select * from player");
+            if (!string.IsNullOrWhiteSpace(options.SearchValue))
+            {
+                sql.AppendToEnd("where discord_id=@Value or display_name like @Value");
+                sql.AddParameter("Value", $"%{options.SearchValue.Trim()}");
+            }
+            sql.AppendToEnd("order by score desc");
+            var query = sql.GetQuery();
+            var result = await this.Db.PageAsync<Player>(options.Page, options.PageSize, query.Sql, query.DynamicParameters);
+            return new PageResult<Player>(options.Page, options.PageSize, result.TotalItems, result.Items);
         }
     }
 }

@@ -15,19 +15,19 @@ namespace SevenWinBackend.Application.Interfaces
         /// <summary>
         /// 当前页
         /// </summary>
-        int Page { get; set; }
+        int Page { get; }
         /// <summary>
         /// 每页记录数
         /// </summary>
-        int PageSize { get; set; }
+        int PageSize { get; }
         /// <summary>
         /// 查询类型
         /// </summary>
-        string? SearchType { get; set; }
+        string? SearchType { get; }
         /// <summary>
         /// 查询值
         /// </summary>
-        string? SearchValue { get; set; }
+        string? SearchValue { get; }
         /// <summary>
         /// 排序
         /// </summary>
