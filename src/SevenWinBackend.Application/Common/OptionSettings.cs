@@ -27,7 +27,7 @@ namespace SevenWinBackend.Application.Common
         /// <summary>
         /// OcrSpace Key
         /// </summary>
-        public string OcrSpaceKey { get; }
+        public List<string> OcrSpaceKeys { get; } = new List<string>();
         /// <summary>
         /// 连接字符串
         /// </summary>
@@ -37,9 +37,23 @@ namespace SevenWinBackend.Application.Common
         {
             this.DiscordToken = config.GetValue<string>("Discord:Token");
             this.EnableDiscordProxy = config.GetValue<bool>("Discord:Proxy");
-            this.OcrSpaceKey = config.GetValue<string>("OcrSpaceKey");
+            this.OcrSpaceKeys = config.GetSection("OcrSpaceKeys").Get<string[]>().ToList();
             this.ConnectionString = config.GetValue<string>("ConnectionStrings:Default");
             BotEnabled = true;
+        }
+        /// <summary>
+        /// 随机获取OcrSpaceKey
+        /// </summary>
+        /// <returns></returns>
+        public string GetRandomOcrSpaceKey()
+        {
+            if (OcrSpaceKeys.Count == 0)
+            {
+                throw new InvalidOperationException("配置文件没有设置OcrSpaceKeys");
+            }
+            Random random= new Random();
+            int index = random.Next(0, OcrSpaceKeys.Count);
+            return OcrSpaceKeys[index];
         }
     }
 }

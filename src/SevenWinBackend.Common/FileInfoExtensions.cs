@@ -19,5 +19,30 @@ namespace SevenWinBackend.Common
                 return stream.GetMd5HashCode();
             }
         }
+        /// <summary>
+        /// 读取文件流
+        /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static async Task<MemoryStream> ReadMemoryStreamAsync(this FileInfo file)
+        {
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+            byte[] bytes = await File.ReadAllBytesAsync(file.FullName);
+            return new MemoryStream(bytes);
+        }
+        /// <summary>
+        /// 读取文件的bytes
+        /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static async Task<byte[]> ReadAllBytesAsync(this FileInfo file)
+        {
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+            return await File.ReadAllBytesAsync(file.FullName);
+        }
     }
 }

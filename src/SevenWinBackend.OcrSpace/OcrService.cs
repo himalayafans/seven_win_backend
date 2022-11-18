@@ -86,10 +86,11 @@ namespace SevenWinBackend.OcrSpace
             }
         }
 
-        public async Task<IOcrResult> Parse(FileInfo imageFile)
+        public async Task<IOcrResult> Parse(MemoryStream imageStream)
         {
             var httpClient = _httpClientFactory.CreateClient();
-            var bytes = await File.ReadAllBytesAsync(imageFile.FullName);
+            //var bytes = await File.ReadAllBytesAsync(imageFile.FullName);
+            var bytes = imageStream.ToArray();
             var base64 = "data:image/jpeg;base64," + System.Convert.ToBase64String(bytes);
             var data = new Dictionary<string, string>
                 {
@@ -97,12 +98,11 @@ namespace SevenWinBackend.OcrSpace
                     { "isOverlayRequired", "true" },
                     { "scale", "true" },
                     { "OCREngine", "2" },
-                    { "apikey", _option.OcrSpaceKey },
+                    { "apikey", _option.GetRandomOcrSpaceKey() },
                     { "base64Image", base64 }
                 };
             var res = await httpClient.PostAsync(Api, new FormUrlEncodedContent(data));
             var jsonString = await res.Content.ReadAsStringAsync();
-            _logger.LogInformation($"Finish analyzing the image file {imageFile.FullName}");
             _logger.LogInformation(jsonString);
             var response = TryParse(jsonString);
             if (response.IsErroredOnProcessing)

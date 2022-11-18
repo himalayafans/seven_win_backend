@@ -15,12 +15,11 @@ namespace SevenWinBackend.Application.Services
         /// <summary>
         /// 识别图片文件
         /// </summary>
-        public Task<IOcrResult> Parse(FileInfo imageFile);
+        public Task<IOcrResult> Parse(MemoryStream imageStream);
         /// <summary>
         /// OCR引擎名称
         /// </summary>
         public string GetName();
-
         /// <summary>
         /// 反序列化Ocr文本
         /// </summary>

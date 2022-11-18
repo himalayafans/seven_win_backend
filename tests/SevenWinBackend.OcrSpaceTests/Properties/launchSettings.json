@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SevenWinBackend.OcrSpaceTests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
