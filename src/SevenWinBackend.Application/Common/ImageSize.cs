@@ -9,7 +9,7 @@ namespace SevenWinBackend.Application.Common
     /// <summary>
     /// 图片尺寸
     /// </summary>
-    internal class ImageSize
+    public class ImageSize
     {
         /// <summary>
         /// 宽度

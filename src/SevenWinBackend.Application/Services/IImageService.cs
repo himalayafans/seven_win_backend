@@ -1,4 +1,5 @@
 ﻿using Discord.Rest;
+using SevenWinBackend.Application.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,6 @@ namespace SevenWinBackend.Application.Services
         /// <summary>
         /// 重设图片的尺寸大小
         /// </summary>
-        public Task<FileInfo> Resize(FileInfo imageFile, int maxWidth, int maxHeight);
+        public Task<MemoryStream> Resize(MemoryStream imageStream, ImageSize maxSize, ImageSize fileSize);
     }
 }
