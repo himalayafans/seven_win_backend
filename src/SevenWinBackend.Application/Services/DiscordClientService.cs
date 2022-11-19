@@ -40,13 +40,7 @@ namespace SevenWinBackend.Application.Services
             this.client.Ready += Client_Ready;
             this.client.MessageReceived += Client_MessageReceived;
             this.client.Log += Client_Log;
-            this.client.LoggedIn += Client_LoggedIn;
             this.commandService.CommandExecuted += CommandService_CommandExecuted;
-        }
-
-        private Task Client_LoggedIn()
-        {
-            throw new NotImplementedException();
         }
 
         public async Task LoginAsync()

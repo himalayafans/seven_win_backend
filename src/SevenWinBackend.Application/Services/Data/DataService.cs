@@ -19,6 +19,43 @@ namespace SevenWinBackend.Application.Services.Data
         }
 
         /// <summary>
+        /// 同步服务器
+        /// </summary>
+        private async Task<Guild> SyncGuild(SocketGuild guild, IUnitOfWork work)
+        {
+            Guild? obj = await work.Guild.GetByDiscordId(guild.Id.ToString());
+            if (obj == null)
+            {
+                obj = Guild.Create(guild.Id.ToString(), guild.Name);
+                await work.Guild.Insert(obj);
+            }
+            if (obj.Name != guild.Name)
+            {
+                obj.Name = guild.Name;
+                await work.Guild.Update(obj);
+            }
+            return obj;
+        }
+        /// <summary>
+        /// 同步频道
+        /// </summary>
+        private async Task<Channel> SyncChannel(Guild guild, SocketGuildChannel channel, IUnitOfWork work)
+        {
+            Channel? obj = await work.Channel.GetByDiscordId(channel.Id.ToString());
+            if (obj == null)
+            {
+                obj = Channel.Create(guild.Id, channel.Id.ToString(), channel.Name);
+                await work.Channel.Insert(obj);
+            }
+            if (obj.Name != channel.Name)
+            {
+                obj.Name = channel.Name;
+                await work.Channel.Update(obj);
+            }
+            return obj;
+        }
+
+        /// <summary>
         /// 填充数据（Discord服务器、频道）
         /// </summary>
         public async Task Fill(DiscordSocketClient client)
@@ -28,41 +65,13 @@ namespace SevenWinBackend.Application.Services.Data
             try
             {
                 var w = work;
+                // 遍历Discord服务器
                 foreach (var discordGuild in client.Guilds)
                 {
-                    Guild? guild = await work.Guild.GetByDiscordId(discordGuild.Id.ToString());
-                    if (guild == null)
+                    Guild guild = await SyncGuild(discordGuild, work);
+                    foreach (var channel in discordGuild.Channels)
                     {
-                        // 如果服务器不存在，则插入到数据库
-                        guild = Guild.Create(discordGuild.Id.ToString(), discordGuild.Name);
-                    }
-                    else
-                    {
-                        // 同步服务器名称
-                        if (guild.Name != discordGuild.Name)
-                        {
-                            guild.Name = discordGuild.Name;
-                            await work.Guild.Update(guild);
-                        }
-                    }
-                    List<Channel> channels = await work.Channel.GetAll();
-                    foreach (var discordChannel in discordGuild.Channels)
-                    {
-                        var channel = await work.Channel.GetByDiscordId(discordChannel.Id.ToString());
-                        if (channel == null)
-                        {
-                            // 如果频道不存在，则插入数据库
-                            await work.Channel.Insert(Channel.Create(guild.Id, discordGuild.Id.ToString(), discordChannel.Name));
-                        }
-                        else
-                        {
-                            //同步频道名称
-                            if (channel.Name != discordChannel.Name)
-                            {
-                                channel.Name = discordChannel.Name;
-                                await work.Channel.Update(channel);
-                            }
-                        }
+                        await SyncChannel(guild, channel, work);
                     }
                 }
                 work.Commit();

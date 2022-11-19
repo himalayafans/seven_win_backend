@@ -45,7 +45,7 @@ namespace SevenWinBackend.Data.Repositories
                 sql.AppendToEnd("where discord_id=@Value or display_name like @Value");
                 sql.AddParameter("Value", $"%{options.SearchValue.Trim()}");
             }
-            sql.AppendToEnd("order by score desc");
+            sql.AppendToEnd("order by score desc,id asc");
             var query = sql.GetQuery();
             var result = await this.Db.PageAsync<Player>(options.Page, options.PageSize, query.Sql, query.DynamicParameters);
             return new PageResult<Player>(options.Page, options.PageSize, result.TotalItems, result.Items);

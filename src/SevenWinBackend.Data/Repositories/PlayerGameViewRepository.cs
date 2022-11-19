@@ -39,7 +39,7 @@ namespace SevenWinBackend.Data.Repositories
             {
                 string value = options.SearchValue.Trim();
                 sql.AppendToEnd("and player_full_name like @Value");
-                sql.AddParameter("@Value", value);
+                sql.AddParameter("@Value", $"%{value}");
             }
             if (options.StartTime != null && options.StartTime > 0)
             {
