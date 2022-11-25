@@ -22,6 +22,6 @@ namespace SevenWinBackend.Application.Base
         {
             Successor = game;
         }
-        public abstract Task Handle(SocketUserMessage message, PlayResult playResult);
+        public abstract Task Handle(SocketUserMessage message, SocketGuildChannel channel, SocketGuildUser user, PlayResult playResult);
     }
 }

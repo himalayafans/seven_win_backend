@@ -13,7 +13,7 @@ namespace SevenWinBackend.Application.Services
     public interface IOcrService
     {
         /// <summary>
-        /// 识别图片文件
+        /// 识别图片文件(解析失败则抛出异常)
         /// </summary>
         public Task<IOcrResult> Parse(MemoryStream imageStream);
         /// <summary>

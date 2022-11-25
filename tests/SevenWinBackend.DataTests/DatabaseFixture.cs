@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using SevenWinBackend.Application.Common;
 using SevenWinBackend.Application.Data;
+using SevenWinBackend.Application.Options;
 using SevenWinBackend.Data;
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace SevenWinBackend.DataTests
         {
             var builder = WebApplication.CreateBuilder();
             builder.Services.AddHttpClient();
-            builder.Services.TryAddSingleton<OptionSettings, OptionSettings>();
+            builder.Services.TryAddSingleton<SettingOptions, SettingOptions>();
             builder.Services.TryAddSingleton<IUnitOfWorkFactory, UnitOfWorkFactory>();
             application = builder.Build();
             unitOfWorkFactory = application.Services.GetRequiredService<IUnitOfWorkFactory>();

@@ -9,7 +9,7 @@ namespace SevenWinBackend.ApplicationTests
     [Collection("app collection")]
     public class ImageServiceTest
     {
-        private readonly IImageService imageService;
+        private readonly IImageHandlerService imageService;
         private readonly AppFixture appFixture;
         private readonly IWebHostEnvironment env;
 

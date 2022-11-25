@@ -8,15 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SevenWinBackend.Application.Common;
+using SevenWinBackend.Application.Options;
 
 namespace SevenWinBackend.Application.Services
 {
     public class DiscordClientFactory : IDiscordClientFactory
     {
-        private readonly OptionSettings settings;
+        private readonly SettingOptions settings;
 
-        public DiscordClientFactory(OptionSettings settings)
+        public DiscordClientFactory(SettingOptions settings)
         {
             this.settings = settings;
         }

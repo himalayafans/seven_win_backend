@@ -16,6 +16,10 @@ namespace SevenWinBackend.Application.Repositories
         /// <summary>
         /// 通过Discord文件哈希值获取图片
         /// </summary>
-        Task<Image?> GetOriginalFileHash(string fileHash);
+        Task<Image?> GetByOriginalFileHash(string fileHash);
+        /// <summary>
+        /// 通过Discord URL获取图片
+        /// </summary>
+        Task<Image?> GetByDiscordUrl(string discordUrl);
     }
 }

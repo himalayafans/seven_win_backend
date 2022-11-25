@@ -16,7 +16,17 @@ namespace SevenWinBackend.Data.Repositories
         {
         }
 
-        public async Task<Image?> GetOriginalFileHash(string fileHash)
+        public async Task<Image?> GetByDiscordUrl(string discordUrl)
+        {
+            if (string.IsNullOrWhiteSpace(discordUrl))
+            {
+                throw new ArgumentNullException(nameof(discordUrl));
+            }
+            string sql = "select * from image where discord_url=@DiscordUrl;";
+            return await this.Db.SingleOrDefaultAsync<Image>(sql);
+        }
+
+        public async Task<Image?> GetByOriginalFileHash(string fileHash)
         {
             if (string.IsNullOrWhiteSpace(fileHash))
             {
@@ -25,5 +35,6 @@ namespace SevenWinBackend.Data.Repositories
             string sql = "SELECT * FROM image WHERE discord_file_hash=@Hash;";
             return await this.Db.SingleOrDefaultAsync<Image?>(sql, new { Hash = fileHash });
         }
+
     }
 }

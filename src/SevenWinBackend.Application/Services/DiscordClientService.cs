@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 using SevenWinBackend.Application.Common;
 using SevenWinBackend.Application.Games.SevenWin;
+using SevenWinBackend.Application.Options;
 using SevenWinBackend.Application.Services.Data;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,11 @@ namespace SevenWinBackend.Application.Services
         protected readonly DiscordClientFactory factory;
         private readonly ILogger<DiscordClientService> logger;
         private readonly CommandService commandService;
-        private readonly OptionSettings settings;
+        private readonly SettingOptions settings;
         private readonly SevenWinGameEngine sevenWinGameEngine;
         private readonly DataService dataService;
 
-        public DiscordClientService(DiscordClientFactory factory, ILogger<DiscordClientService> logger, CommandService commandService, OptionSettings appSettings, SevenWinGameEngine sevenWinGameEngine, DataService dataService)
+        public DiscordClientService(DiscordClientFactory factory, ILogger<DiscordClientService> logger, CommandService commandService, SettingOptions appSettings, SevenWinGameEngine sevenWinGameEngine, DataService dataService)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -75,17 +76,20 @@ namespace SevenWinBackend.Application.Services
             var message = arg as SocketUserMessage;
             if (message == null)
             {
+                logger.LogInformation("Ignore system messages");
                 // 忽略系统消息
                 return;
             }
             if (message.Author.IsBot)
             {
+                logger.LogInformation("Ignore messages from bots.");
                 // 忽略机器人消息
                 return;
             }
-            var user = message.Author as SocketGroupUser;
+            var user = message.Author as SocketGuildUser;
             if (user == null)
             {
+                logger.LogInformation("Ignore users who are not SocketGuildUser.");
                 return;
             }
             var channel = message.Channel as SocketGuildChannel;
@@ -94,7 +98,7 @@ namespace SevenWinBackend.Application.Services
                 return;
             }
             PlayResult result = new PlayResult();
-            await sevenWinGameEngine.Handle(message, result);
+            await sevenWinGameEngine.Handle(message, channel, user, result);
             string replyMessage = result.ToString();
             if (!string.IsNullOrWhiteSpace(result.ToString()))
             {

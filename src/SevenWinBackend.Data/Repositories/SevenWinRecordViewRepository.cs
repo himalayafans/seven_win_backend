@@ -18,28 +18,40 @@ namespace SevenWinBackend.Data.Repositories
             Db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<SevenWinRecordView?> GetBaseGameInOneMinute(string discordUserId, string guildDiscordId)
+        public async Task<SevenWinRecordView?> GetBaseGameInOneMinute(Guid playerId, Guid guildId)
         {
             DateTime time = DateTime.Now.AddMinutes(-1);
             string sql = @"select *
                            from seven_win_record_view
-                           where guild_discord_id = @GuildDiscordId
-                           and player_discord_id = @PlayerDiscordId
-                           and created_at >= @CreatedAt
-                           and is_base = true;";
-            return await this.Db.SingleOrDefaultAsync<SevenWinRecordView?>(sql, new { GuildDiscordId = guildDiscordId, PlayerDiscordId = discordUserId, CreatedAt = time });
+                           where player_id = @PlayerId
+                               and guild_id = @GuildId
+                               and created_at >= @CreatedAt
+                               and is_base = true;";
+            return await this.Db.SingleOrDefaultAsync<SevenWinRecordView?>(sql, new { PlayerId = playerId, GuildId = guildId, CreatedAt = time });
         }
 
-        public async Task<List<SevenWinRecordView>> GetAdditionalGamesInOneMinute(string discordUserId, string guildDiscordId)
+        public async Task<List<SevenWinRecordView>> GetAdditionalGamesInOneMinute(Guid playerId, Guid guildId)
         {
             DateTime time = DateTime.Now.AddMinutes(-1);
             string sql = @"select *
                            from seven_win_record_view
-                           where guild_discord_id = @GuildDiscordId
-                           and player_discord_id = @PlayerDiscordId
-                           and created_at >= @CreatedAt
-                           and is_base = false;";
-            return await this.Db.FetchAsync<SevenWinRecordView>(sql, new { GuildDiscordId = guildDiscordId, PlayerDiscordId = discordUserId, CreatedAt = time });
+                           where player_id = @PlayerId
+                               and guild_id = @GuildId
+                               and created_at >= @CreatedAt
+                               and is_base = false;";
+            return await this.Db.FetchAsync<SevenWinRecordView>(sql, new { PlayerId = playerId, GuildId = guildId, CreatedAt = time });
+        }
+        /// <summary>
+        /// 基础游戏中是否存在相同的图片
+        /// </summary>
+        public async Task<bool> IsExistSameImageInBaseGame(Guid imageId)
+        {
+            string sql = @"select count(*)
+                       from seven_win_record_view
+                       where image_id = @ImageId
+                       and is_base = false;";
+            int count = await this.Db.ExecuteScalarAsync<int>(sql, new { ImageId = imageId });
+            return count > 0;
         }
     }
 }

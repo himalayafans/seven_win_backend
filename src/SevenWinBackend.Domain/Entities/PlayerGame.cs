@@ -95,6 +95,11 @@ public class PlayerGame : BaseEntity
             throw new ArgumentNullException(nameof(scoreDetail));
         }
         this.ScoreDetail = JsonHelper.Serialize(scoreDetail);
+        this.Score = scoreDetail.GetSumOfScore();
         this.UpdatedAt = DateTime.Now;
+    }
+    public T GetScoreDetail<T>() where T: IScoreDetail, new()
+    {
+        return JsonHelper.Deserialize<T>(this.ScoreDetail);
     }
 }

@@ -22,10 +22,14 @@ namespace SevenWinBackend.Application.Services.Data
         /// <summary>
         /// 通过Discord ID获取服务器
         /// </summary>
-        public async Task<Guild?> GetByDiscordId(ulong discordId)
+        public async Task<Guild?> GetByDiscordId(string discordId)
         {
+            if (string.IsNullOrWhiteSpace(discordId))
+            {
+                throw new ArgumentNullException(nameof(discordId));
+            }
             using var work = this.unitOfWorkFactory.Create();
-            return await work.Guild.GetByDiscordId(discordId.ToString());
+            return await work.Guild.GetByDiscordId(discordId);
         }
         /// <summary>
         /// 插入服务器数据

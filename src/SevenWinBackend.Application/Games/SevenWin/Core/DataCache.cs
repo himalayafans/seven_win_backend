@@ -13,6 +13,10 @@ namespace SevenWinBackend.Application.Games.SevenWin.Core
     internal class DataCache
     {
         /// <summary>
+        /// 当前消息的服务器ID
+        /// </summary>
+        public Guid GuildId { get; set; } = Guid.Empty;
+        /// <summary>
         /// 当前消息的频道ID
         /// </summary>
         public Guid ChannelId { get; set; } = Guid.Empty;
@@ -32,9 +36,5 @@ namespace SevenWinBackend.Application.Games.SevenWin.Core
         /// 游戏记录ID
         /// </summary>
         public Guid GameRecordId { get; set; } = Guid.Empty;
-        /// <summary>
-        /// 游戏频道配置
-        /// </summary>
-        public List<SevenWinConfigView> Channels { get; set; } = new List<SevenWinConfigView>();
     }
 }

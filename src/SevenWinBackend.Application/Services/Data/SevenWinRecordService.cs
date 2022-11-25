@@ -6,45 +6,62 @@ namespace SevenWinBackend.Application.Services.Data;
 /// <summary>
 /// 出7制胜游戏数据服务
 /// </summary>
-public class SevenWinGameService
+public class SevenWinRecordService
 {
     private readonly IUnitOfWorkFactory unitOfWorkFactory;
 
-    public SevenWinGameService(IUnitOfWorkFactory unitOfWorkFactory)
+    public SevenWinRecordService(IUnitOfWorkFactory unitOfWorkFactory)
     {
         this.unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
+    }
+    public async Task<SevenWinRecord?> GetSevenWinRecordById(Guid id)
+    {
+        using var work = unitOfWorkFactory.Create();
+        return await work.SevenWinRecord.GetById(id);
     }
     /// <summary>
     /// 获取一分钟内的基础游戏记录
     /// </summary>
-    public async Task<SevenWinRecordView?> GetBaseGameInOneMinute(string discordUserId, string guildDiscordId)
+    public async Task<SevenWinRecordView?> GetBaseGameInOneMinute(Guid playerId, Guid guildId)
     {
-        if (string.IsNullOrWhiteSpace(discordUserId))
+        if (playerId == Guid.Empty)
         {
-            throw new ArgumentNullException(nameof(discordUserId));
+            throw new ArgumentNullException(nameof(playerId));
         }
-        if (string.IsNullOrWhiteSpace(guildDiscordId))
+        if (guildId == Guid.Empty)
         {
-            throw new ArgumentNullException(nameof(guildDiscordId));
+            throw new ArgumentNullException(nameof(guildId));
         }
         using var work = unitOfWorkFactory.Create();
-        return await work.SevenWinRecordView.GetBaseGameInOneMinute(discordUserId, guildDiscordId);
+        return await work.SevenWinRecordView.GetBaseGameInOneMinute(playerId, guildId);
     }
 
     /// <summary>
     /// 获取1分钟内的附加游戏记录
     /// </summary>
-    public async Task<List<SevenWinRecordView>> GetAdditionalGamesInOneMinute(string discordUserId, string guildDiscordId)
+    public async Task<List<SevenWinRecordView>> GetAdditionalGamesInOneMinute(Guid playerId, Guid guildId)
     {
-        if (string.IsNullOrWhiteSpace(discordUserId))
+        if (playerId == Guid.Empty)
         {
-            throw new ArgumentNullException(nameof(discordUserId));
+            throw new ArgumentNullException(nameof(playerId));
+        }
+        if (guildId == Guid.Empty)
+        {
+            throw new ArgumentNullException(nameof(guildId));
         }
         using var work = unitOfWorkFactory.Create();
-        return await work.SevenWinRecordView.GetAdditionalGamesInOneMinute(discordUserId, guildDiscordId);
+        return await work.SevenWinRecordView.GetAdditionalGamesInOneMinute(playerId, guildId);
     }
     /// <summary>
-    /// 创建未完成的游戏记录
+    /// 检查基础房间是否存在相同的图片,存在则返回true
+    /// </summary>
+    public async Task<bool> IsExistSameImageInBaseGame(Guid imageId)
+    {
+        using var work = unitOfWorkFactory.Create();
+        return await work.SevenWinRecordView.IsExistSameImageInBaseGame(imageId);
+    }
+    /// <summary>
+    /// 创建游戏记录
     /// </summary>
     public async Task<SevenWinRecord> AddSevenWinGameRecord(Guid playerGameId, Guid channelId, Guid discordImageId, bool isBase)
     {

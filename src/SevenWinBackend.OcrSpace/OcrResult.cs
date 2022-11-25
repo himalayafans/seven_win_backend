@@ -19,7 +19,7 @@ namespace SevenWinBackend.OcrSpace
             OcrResponse = ocrResponse ?? throw new ArgumentNullException(nameof(ocrResponse));
         }
 
-        string IOcrResult.GetText()
+        public string GetText()
         {
             var results = OcrResponse.ParsedResults;
             if (results != null && results.Count > 0)
@@ -32,7 +32,7 @@ namespace SevenWinBackend.OcrSpace
             }
         }
 
-        string IOcrResult.GetPrice()
+        public string GetPrice()
         {
             var parsedResult = OcrResponse.ParsedResults.First();
             Word? titleWord = null;
@@ -81,11 +81,6 @@ namespace SevenWinBackend.OcrSpace
             var price = Convert.ToDecimal(priceWord.WordText);
             var priceText = price.ToString(CultureInfo.CurrentCulture);
             return priceText;
-        }
-
-        bool IOcrResult.IsContainText(string text)
-        {
-            throw new NotImplementedException();
         }
     }
 }

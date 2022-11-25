@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SevenWinBackend.Application.Common;
 using SevenWinBackend.Application.Data;
+using SevenWinBackend.Application.Options;
 
 namespace SevenWinBackend.Data
 {
     public class UnitOfWorkFactory : IUnitOfWorkFactory
     {
-        private readonly OptionSettings OptionSettings;
+        private readonly SettingOptions OptionSettings;
 
-        public UnitOfWorkFactory(OptionSettings optionSettings)
+        public UnitOfWorkFactory(SettingOptions optionSettings)
         {
             OptionSettings = optionSettings ?? throw new ArgumentNullException(nameof(optionSettings));
         }

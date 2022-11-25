@@ -19,9 +19,5 @@ namespace SevenWinBackend.Application.Services
         /// 获取喜币价格
         /// </summary>
         public string GetPrice();
-        /// <summary>
-        /// 是否包含指定文本
-        /// </summary>
-        public bool IsContainText(string text);
     }
 }

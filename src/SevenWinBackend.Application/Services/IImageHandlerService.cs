@@ -11,7 +11,7 @@ namespace SevenWinBackend.Application.Services
     /// <summary>
     /// 图片服务
     /// </summary>
-    public interface IImageService
+    public interface IImageHandlerService
     {
         /// <summary>
         /// 重设图片的尺寸大小

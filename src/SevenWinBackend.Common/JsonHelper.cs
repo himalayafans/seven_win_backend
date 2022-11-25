@@ -45,7 +45,7 @@ namespace SevenWinBackend.Common
         /// JSON反序列化
         /// </summary>
         /// <exception cref="InvalidOperationException"></exception>
-        public static T Deserialize<T>(string json) where T : class
+        public static T Deserialize<T>(string json) where T : new()
         {
             T? obj = JsonSerializer.Deserialize<T>(json);
             if (obj == null)

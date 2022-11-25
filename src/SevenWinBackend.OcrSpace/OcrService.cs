@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using SevenWinBackend.Application.Common;
+using SevenWinBackend.Application.Options;
 using SevenWinBackend.Application.Services;
 using SevenWinBackend.Common;
 using SevenWinBackend.Domain.Enums;
@@ -18,12 +18,12 @@ namespace SevenWinBackend.OcrSpace
 {
     public class OcrService : IOcrService
     {
-        private readonly OptionSettings _option;
+        private readonly SettingOptions _option;
         private const string Api = "https://api.ocr.space/parse/image";
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<OcrService> _logger;
 
-        public OcrService(OptionSettings option, IHttpClientFactory httpClientFactory, ILogger<OcrService> logger)
+        public OcrService(SettingOptions option, IHttpClientFactory httpClientFactory, ILogger<OcrService> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _option = option ?? throw new ArgumentNullException(nameof(option));
