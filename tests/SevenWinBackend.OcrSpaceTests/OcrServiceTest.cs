@@ -34,7 +34,7 @@ namespace SevenWinBackend.OcrSpaceTests
             Assert.Equal("K85919863888957", keys[2]);
         }
         [Fact]
-        public async Task ParseTest()
+        public async Task IphonePriceTest()
         {
             string webRootPath = this.env.WebRootPath;
             FileInfo file = new FileInfo(Path.Combine(webRootPath, "phone.jpeg"));
@@ -44,6 +44,16 @@ namespace SevenWinBackend.OcrSpaceTests
             var ocrResult = await this.ocrService.Parse(stream);
             output.WriteLine("¼ì²éOcr½á¹û");
             Assert.Equal("23.753", ocrResult.GetPrice());
+        }
+        [Fact]
+        public async Task IpadPriceTest()
+        {
+            string webRootPath = this.env.WebRootPath;
+            FileInfo file = new FileInfo(Path.Combine(webRootPath, "ipad.png"));
+            var stream = await file.ReadMemoryStreamAsync();
+            var ocrResult = await this.ocrService.Parse(stream);
+            string price = ocrResult.GetPrice();
+            Assert.Equal("24.020", price);
         }
         [Fact]
         public async Task IsIncludeHdo()

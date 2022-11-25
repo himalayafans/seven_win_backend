@@ -32,6 +32,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="wwwroot\ipad.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="wwwroot\phone.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

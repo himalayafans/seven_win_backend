@@ -31,8 +31,11 @@ namespace SevenWinBackend.OcrSpace
                 return string.Empty;
             }
         }
-
-        public string GetPrice()
+        /// <summary>
+        /// 获取手机版截图的价格
+        /// </summary>
+        /// <returns></returns>
+        private string GetIphonePrice()
         {
             var parsedResult = OcrResponse.ParsedResults.First();
             Word? titleWord = null;
@@ -81,6 +84,53 @@ namespace SevenWinBackend.OcrSpace
             var price = Convert.ToDecimal(priceWord.WordText);
             var priceText = price.ToString(CultureInfo.CurrentCulture);
             return priceText;
+        }
+        /// <summary>
+        /// 获取平板截图的价格
+        /// </summary>
+        /// <returns></returns>
+        public string GetIpadPrice()
+        {
+            var parsedResult = OcrResponse.ParsedResults.First();
+            Word? titleWord = null;
+            var titleLine = parsedResult.TextOverlay.Lines.Find(line =>
+            {
+                return line.Words.Exists(item =>
+                {
+                    var text = item.WordText;
+                    // 识别“HCN/HDO”，共7个符号
+                    // 考虑到最后一个O可能被识别为数字0，或无法识别的问题
+                    // 考虑/斜线识别问题
+                    //var flag = text.StartsWith("HCN/HD") && text.Length is 6 or 7;
+                    // 有时候被识别为HCN/HDOO
+                    var flag = text.StartsWith("HCN") && text.Contains("HD") && text.Length <= 8;
+                    if (flag)
+                    {
+                        titleWord = item;
+                    }
+                    return flag;
+                });
+            });
+            if (titleLine != null && titleLine.Words.Count == 2 && titleLine.Words[1].WordText.IsDecimal())
+            {
+                return titleLine.Words[1].WordText;
+            }
+            else
+            {
+                throw new Exception("截图没有包含喜币价格");
+            }
+        }
+
+        public string GetPrice()
+        {
+            try
+            {
+                return GetIphonePrice();
+            }
+            catch (Exception)
+            {
+                return GetIpadPrice();
+            }
         }
     }
 }
