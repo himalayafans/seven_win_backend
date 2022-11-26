@@ -12,7 +12,7 @@ using SevenWinBackend.Application.Options;
 
 namespace SevenWinBackend.Application.Services
 {
-    public class DiscordClientFactory : IDiscordClientFactory
+    public class DiscordClientFactory
     {
         private readonly SettingOptions settings;
 

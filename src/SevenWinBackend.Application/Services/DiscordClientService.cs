@@ -114,6 +114,10 @@ namespace SevenWinBackend.Application.Services
 
         public void Dispose()
         {
+            this.commandService.Log -= CommandService_Log;
+            this.client.Ready -= Client_Ready;
+            this.client.MessageReceived -= Client_MessageReceived;
+            this.client.Log -= Client_Log;
             client.Dispose();
         }
     }

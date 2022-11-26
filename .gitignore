@@ -367,3 +367,5 @@ SevenToWinBackend/wwwroot/images
 .idea
 
 /tests/SevenWinBackend.OcrSpaceTests/appsettings.Development.json
+/src/SevenWinBackend.Robot/appsettings.Development.json
+/src/SevenWinBackend.Robot/appsettings.json

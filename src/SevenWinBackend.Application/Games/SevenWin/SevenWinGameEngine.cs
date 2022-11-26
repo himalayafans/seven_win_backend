@@ -40,19 +40,17 @@ namespace SevenWinBackend.Application.Games.SevenWin
         private readonly IOcrService ocrService;
         private readonly IImageHandlerService imageService;
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
-        private readonly IWebHostEnvironment env;
         private readonly HttpService httpService;
         private readonly IServiceProvider serviceProvider;
 
         public SevenWinGameEngine(ILogger<SevenWinGameEngine> logger, IOcrService ocrService,
-            IImageHandlerService imageService, IUnitOfWorkFactory unitOfWorkFactory, IWebHostEnvironment environment,
+            IImageHandlerService imageService, IUnitOfWorkFactory unitOfWorkFactory, 
             HttpService httpService, IServiceProvider serviceProvider)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.ocrService = ocrService ?? throw new ArgumentNullException(nameof(ocrService));
             this.imageService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             this.unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
-            env = environment ?? throw new ArgumentNullException(nameof(environment));
             this.httpService = httpService ?? throw new ArgumentNullException(nameof(httpService));
             this.serviceProvider = serviceProvider;
         }
