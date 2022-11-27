@@ -46,6 +46,7 @@ internal class GameBaseStrategy : BaseStrategy
             context.PlayResult.AddMessage($"发帖时间尾数是7，获得{timeScore}个玉米");
             context.PlayResult.AddMessage($"喜币价格{price}包含{count}个7，获得{priceScore}个玉米");
             await recordService.Update(context.Cache.PlayerGameId, detail);
+            context.PlayResult.TotalScore = detail.GetSumOfScore();
         }
         else
         {

@@ -62,7 +62,7 @@ namespace SevenWinBackend.Robot
               .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.Unauthorized)
               // What to do if any of the above erros occur:
               // Retry 3 times, each time wait 1,2 and 4 seconds before retrying.
-              .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+              .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(2));
         }
     }
 }

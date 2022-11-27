@@ -43,7 +43,6 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
             PlayerGameService gameService = context.GetService<PlayerGameService>();
             ChannelService channelService = context.GetService<ChannelService>();
             SevenWinRecordService recordService = context.GetService<SevenWinRecordService>();
-
             SevenWinRecordView? baseRecordView = await recordService.GetBaseGameInOneMinute(context.Cache.PlayerId, context.Cache.GuildId);
             if (baseRecordView == null)
             {
@@ -80,6 +79,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                     int score = scoreDetail.GetSumOfScore();
                     scoreDetail.AdditionalScore = score;
                     await Update(scoreDetail, context);
+                    context.PlayResult.TotalScore = scoreDetail.GetSumOfScore();
                     context.PlayResult.AddMessage($"恭喜赢得附加赛，获得{score}个玉米");
                 }
             }

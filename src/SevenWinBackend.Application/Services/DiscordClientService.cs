@@ -98,11 +98,18 @@ namespace SevenWinBackend.Application.Services
                 return;
             }
             PlayResult result = new PlayResult();
-            await sevenWinGameEngine.Handle(message, channel, user, result);
-            string replyMessage = result.ToString();
-            if (!string.IsNullOrWhiteSpace(result.ToString()))
+            try
             {
-                await message.ReplyAsync(replyMessage);
+                await sevenWinGameEngine.Handle(message, channel, user, result);
+                string replyMessage = result.ToString();
+                if (!string.IsNullOrWhiteSpace(result.ToString()))
+                {
+                    await message.ReplyAsync(replyMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                await message.ReplyAsync(ex.Message);
             }
         }
 
