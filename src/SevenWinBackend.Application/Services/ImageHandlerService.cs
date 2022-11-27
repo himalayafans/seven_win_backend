@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SevenWinBackend.Application.Services
 {
-    public class ImageHandlerService : IImageHandlerService
+    public class ImageHandlerService
     {
         public async Task<MemoryStream> Resize(MemoryStream imageStream, ImageSize maxSize, ImageSize fileSize)
         {

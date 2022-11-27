@@ -38,13 +38,13 @@ namespace SevenWinBackend.Application.Games.SevenWin
 
         private readonly ILogger<SevenWinGameEngine> logger;
         private readonly IOcrService ocrService;
-        private readonly IImageHandlerService imageService;
+        private readonly ImageHandlerService imageService;
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
         private readonly HttpService httpService;
         private readonly IServiceProvider serviceProvider;
 
         public SevenWinGameEngine(ILogger<SevenWinGameEngine> logger, IOcrService ocrService,
-            IImageHandlerService imageService, IUnitOfWorkFactory unitOfWorkFactory, 
+            ImageHandlerService imageService, IUnitOfWorkFactory unitOfWorkFactory, 
             HttpService httpService, IServiceProvider serviceProvider)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));

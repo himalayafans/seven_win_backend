@@ -88,7 +88,7 @@ namespace SevenWinBackend.OcrSpace
 
         public async Task<IOcrResult> Parse(MemoryStream imageStream)
         {
-            var httpClient = _httpClientFactory.CreateClient();
+            var httpClient = _httpClientFactory.CreateClient("HttpClient");
             //var bytes = await File.ReadAllBytesAsync(imageFile.FullName);
             var bytes = imageStream.ToArray();
             var base64 = "data:image/jpeg;base64," + System.Convert.ToBase64String(bytes);

@@ -41,7 +41,7 @@ namespace SevenWinBackend.Application.Services
                 throw new ArgumentNullException(nameof(url));
             }
 
-            var httpClient = httpClientFactory.CreateClient();
+            var httpClient = httpClientFactory.CreateClient("HttpClient");
             string extensionName = url.GetFileExtensionFromUrl();
             string fileName = $"{Guid.NewGuid()}.{extensionName.ToLower()}";
             string fullName = Path.Combine(directory.FullName, fileName);

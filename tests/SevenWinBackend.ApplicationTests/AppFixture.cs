@@ -14,16 +14,16 @@ namespace SevenWinBackend.ApplicationTests
 {
     public class AppFixture
     {
-        public readonly IImageHandlerService imageService;
+        public readonly ImageHandlerService imageService;
         public readonly WebApplication application;
         public readonly IWebHostEnvironment env;
         public AppFixture()
         {
             var builder = WebApplication.CreateBuilder();
             builder.Services.TryAddSingleton<SettingOptions, SettingOptions>();
-            builder.Services.TryAddSingleton<IImageHandlerService, ImageHandlerService>();
+            builder.Services.TryAddSingleton<ImageHandlerService>();
             application = builder.Build();
-            this.imageService = application.Services.GetRequiredService<IImageHandlerService>();
+            this.imageService = application.Services.GetRequiredService<ImageHandlerService>();
             this.env = application.Services.GetRequiredService<IWebHostEnvironment>();
         }
     }
