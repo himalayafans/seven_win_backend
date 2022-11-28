@@ -111,5 +111,19 @@ namespace SevenWinBackend.OcrSpace
             }
             return new OcrResult(response);
         }
+
+        public string Convert(IOcrResult ocrResult)
+        {
+            if (ocrResult == null)
+            {
+                throw new ArgumentNullException(nameof(ocrResult));
+            }
+            OcrResult? result = ocrResult as OcrResult;
+            if (result == null)
+            {
+                throw new InvalidOperationException();
+            }
+            return JsonHelper.Serialize(result.OcrResponse);
+        }
     }
 }

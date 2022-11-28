@@ -52,7 +52,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 MemoryStream resizeImageStream = IsLimit(discordImageStream) ? discordImageStream : await imageHandlerService.Resize(discordImageStream, new Common.ImageSize(1500, 3000), context.DiscordImageInfo.Size);
                 // 识别图片
                 IOcrResult ocrResult = await ocrService.Parse(resizeImageStream);
-                string json = JsonHelper.Serialize(ocrResult);
+                string json = ocrService.Convert(ocrResult);
                 // 向数据库添加图片记录
                 image = Image.Create(player.Id, context.DiscordImageInfo.Url, discordImageHash);
                 image.SetOcr(OcrEngineType.OcrSpace, OcrStatus.Success, json);

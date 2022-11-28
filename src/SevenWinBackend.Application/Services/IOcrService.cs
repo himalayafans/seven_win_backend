@@ -21,8 +21,12 @@ namespace SevenWinBackend.Application.Services
         /// </summary>
         public string GetName();
         /// <summary>
-        /// 反序列化Ocr文本
+        /// 字符串转换为IOcrResult对象
         /// </summary>
         public IOcrResult Convert(OcrEngineType engineType, string ocrText);
+        /// <summary>
+        /// IOcrResult对象转换成字符串
+        /// </summary>
+        public string Convert(IOcrResult ocrResult);
     }
 }
