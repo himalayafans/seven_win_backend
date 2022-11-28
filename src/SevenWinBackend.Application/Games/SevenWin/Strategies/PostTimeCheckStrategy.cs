@@ -25,7 +25,7 @@ internal class PostTimeCheckStrategy : BaseStrategy
             }
             else
             {
-                context.PlayResult.AddMessage("发帖时间与截图时间不一致");
+                throw new Exception("发帖时间与截图时间不一致");
             }
         }
     }

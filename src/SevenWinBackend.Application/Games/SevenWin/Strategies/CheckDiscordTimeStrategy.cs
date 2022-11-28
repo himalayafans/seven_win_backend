@@ -25,7 +25,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
             }
             else
             {
-                context.PlayResult.AddMessage("发帖时间的尾数不是7");
+                throw new Exception("发帖时间与截图时间不一致");
             }
         }
     }

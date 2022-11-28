@@ -8,7 +8,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
     /// </summary>
     internal class LogoStrategy : BaseStrategy
     {
-        public override Task Handle(StrategyContext context)
+        public override async Task Handle(StrategyContext context)
         {
             if (context.OcrResult != null)
             {
@@ -16,14 +16,13 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 // 偶尔会被识别为 HIMALA AYA  EEXCHANGE
                 if (text.ContainsIgnoreCase("himala") && text.ContainsIgnoreCase("exchange"))
                 {
-                    Successor?.Handle(context);
+                    await(this.Successor?.Handle(context) ?? Task.CompletedTask);
                 }
                 else
                 {
-                    context.PlayResult.AddMessage("截图没有喜交所的LOGO或网址");
+                    throw new Exception("截图没有喜交所的LOGO或网址");
                 }
             }
-            return Task.CompletedTask;
         }
     }
 }
