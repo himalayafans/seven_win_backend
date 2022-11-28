@@ -49,7 +49,7 @@ namespace SevenWinBackend.Data.Repositories
             string sql = @"select count(*)
                        from seven_win_record_view
                        where image_id = @ImageId
-                       and is_base = false;";
+                       and is_base = true;";
             int count = await this.Db.ExecuteScalarAsync<int>(sql, new { ImageId = imageId });
             return count > 0;
         }
