@@ -48,7 +48,6 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
             }
             var channelDiscordId = context.GetChannelDiscordId().ToString();
             var cache = context.Cache;
-            var isBaseGame = false;
             var isBaseChannel = context.GuildOption.IsBaseChannel(channelDiscordId);
             if (baseGame == null) // 如果1分钟内没有参加基础游戏
             {
@@ -63,6 +62,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 {
                     throw new Exception("请勿在基础房间重复上传相同图片");
                 }
+                bool isBaseGame = true;
                 // 创建游戏记录              
                 string emptyChannelDiscordId = context.GuildOption.GetRandomEmptyRoomDiscordId();
                 Channel? emptyChannel = await channelService.GetByDiscordId(emptyChannelDiscordId);
@@ -96,7 +96,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 {
                     throw new Exception("请勿在相同的附加频道重复发图");
                 }
-                isBaseGame = false;
+                bool isBaseGame = false;
                 SevenWinRecord record = await recordService.AddSevenWinGameRecord(baseGame.PlayerGameId, cache.ChannelId, cache.ImageId, isBaseGame);
                 cache.PlayerGameId = baseGame.PlayerGameId;
                 cache.GameRecordId = record.Id;

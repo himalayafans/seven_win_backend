@@ -20,6 +20,7 @@ internal class GameBaseStrategy : BaseStrategy
     {
         return count switch
         {
+            0 => 0,
             1 => 7,
             2 => 77,
             3 => 777,
