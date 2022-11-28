@@ -88,7 +88,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 {
                     throw new Exception("请勿在规定时间内,在基础房间重复发图");
                 }
-                if (cache.ImageId != baseGame.DiscordImageId)
+                if (cache.ImageId != baseGame.ImageId)
                 {
                     throw new Exception("附加房间的图片必须与基础房间的图片相同");
                 }

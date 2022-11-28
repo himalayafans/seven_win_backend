@@ -23,7 +23,7 @@ namespace SevenWinBackend.Domain.Entities
         /// <summary>
         /// Discord图片ID
         /// </summary>
-        public Guid DiscordImageId { get; set; }
+        public Guid ImageId { get; set; }
         /// <summary>
         /// 是否是基础游戏
         /// </summary>

@@ -43,7 +43,13 @@ internal class GameBaseStrategy : BaseStrategy
             string price = context.OcrResult!.GetPrice();
             var count = price.ToCharArray().Count(p => p == '7');
             var priceScore = GetScore(count);
-            SevenWinScoreDetail detail = SevenWinScoreDetail.Create(price, count, priceScore, true, timeScore, Guid.Empty);
+            PlayerGame? game = await recordService.GetPlayerGameById(context.Cache.PlayerGameId);
+            if (game == null)
+            {
+                throw new InvalidOperationException();
+            }
+            SevenWinScoreDetail oldDetail = game.GetScoreDetail<SevenWinScoreDetail>();
+            SevenWinScoreDetail detail = SevenWinScoreDetail.Create(price, count, priceScore, true, timeScore, oldDetail.EmptyChannelId);
             context.PlayResult.AddMessage($"发帖时间尾数是7，获得{timeScore}个玉米");
             context.PlayResult.AddMessage($"喜币价格{price}包含{count}个7，获得{priceScore}个玉米");
             await recordService.Update(context.Cache.PlayerGameId, detail);
