@@ -38,7 +38,7 @@ namespace SevenWinBackend.Common
             }
             else
             {
-                return JsonSerializer.Serialize(obj);
+                return JsonSerializer.Serialize(obj, obj.GetType());
             }
         }
         /// <summary>
