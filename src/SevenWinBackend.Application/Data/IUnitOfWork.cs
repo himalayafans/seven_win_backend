@@ -57,14 +57,6 @@ namespace SevenWinBackend.Application.Data
         /// </summary>
         IPlayerRepository Player { get; }
         /// <summary>
-        /// 出7制胜频道配置
-        /// </summary>
-        ISevenWinConfigRepository SevenWinConfig { get; }
-        /// <summary>
-        /// 出7制胜频道配置视图
-        /// </summary>
-        ISevenWinConfigViewRepository SevenWinConfigView { get; }
-        /// <summary>
         /// 出7制胜游戏记录
         /// </summary>
         ISevenWinRecordViewRepository SevenWinRecordView { get; }

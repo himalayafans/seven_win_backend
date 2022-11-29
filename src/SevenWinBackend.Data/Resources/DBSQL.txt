@@ -84,15 +84,6 @@ create index idx_player_game_type on player_game using hash (game_type);
 create index idx_player_game_created_at on player_game using brin (created_at);
 create index idx_player_game_updated_at on player_game using brin (updated_at);
 
--- seven_win_config表
-create table seven_win_config
-(
-    id         uuid primary key,
-    channel_id uuid not null,
-    is_base    bool not null
-);
-create index idx_seven_win_config_channel_id on seven_win_config using hash (channel_id);
-
 -- seven_win_record表
 create table seven_win_record
 (
@@ -106,18 +97,6 @@ create table seven_win_record
 create index idx_seven_win_record_player_game_id on seven_win_record using hash (player_game_id);
 create index idx_seven_win_record_channel_id on seven_win_record using hash (channel_id);
 create index idx_seven_win_record_image_id on seven_win_record using hash (image_id);
-
--- seven_win_config_view视图
-create view seven_win_config_view as
-select t.*,
-       c.discord_id as channel_discord_id,
-       c.name       as channel_name,
-       c.guild_id,
-       g.name       as guild_name,
-       g.discord_id as guild_discord_id
-from seven_win_config as t
-         left join channel c on c.id = t.channel_id
-         left join guild g on g.id = c.guild_id;
 
 -- player_game_view视图
 create view player_game_view as

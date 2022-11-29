@@ -25,8 +25,6 @@ namespace SevenWinBackend.Data
             this.Player = new PlayerRepository(db);
             this.PlayerGame = new PlayerGameRepository(db);
             this.PlayerGameView = new PlayerGameViewRepository(db);
-            this.SevenWinConfig = new SevenWinConfigRepository(db);
-            this.SevenWinConfigView = new SevenWinConfigViewRepository(db);
             this.SevenWinRecord = new SevenWinRecordRepository(db);
             this.SevenWinRecordView = new SevenWinRecordViewRepository(db);
             this.Database = new DatabaseRepository(db);
@@ -47,10 +45,6 @@ namespace SevenWinBackend.Data
         public IPlayerGameViewRepository PlayerGameView { get; }
 
         public IPlayerRepository Player { get; }
-
-        public ISevenWinConfigRepository SevenWinConfig { get; }
-
-        public ISevenWinConfigViewRepository SevenWinConfigView { get; }
 
         public ISevenWinRecordViewRepository SevenWinRecordView { get; }
 
