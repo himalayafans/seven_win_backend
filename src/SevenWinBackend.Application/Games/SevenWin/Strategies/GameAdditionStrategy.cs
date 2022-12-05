@@ -72,7 +72,7 @@ namespace SevenWinBackend.Application.Games.SevenWin.Strategies
                 // 如果参与的附加频道已存在空房间
                 if (sevenWinRecords.Exists(p => p.ChannelId == emptyChannelId))
                 {
-                    throw new Exception("遇到空频道{channel.Name},祝您下次好运。");
+                    throw new Exception($"遇到空频道{channel.Name},祝您下次好运。");
                 }
                 else
                 {
