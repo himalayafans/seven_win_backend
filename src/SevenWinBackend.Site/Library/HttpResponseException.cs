@@ -1,11 +1,13 @@
-﻿namespace SevenWinBackend.Site.Library
+﻿using System.Net;
+
+namespace SevenWinBackend.Site.Library
 {
     public class HttpResponseException : Exception
     {
-        public HttpResponseException(int statusCode, string message) : base(message)
+        public HttpResponseException(string message, HttpStatusCode statusCode = HttpStatusCode.BadRequest) : base(message)
         {
             this.StatusCode = statusCode;
         }
-        public int StatusCode { get; }
+        public HttpStatusCode StatusCode { get; }
     }
 }
