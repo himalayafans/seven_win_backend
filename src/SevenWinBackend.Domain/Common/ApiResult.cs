@@ -9,7 +9,7 @@ namespace SevenWinBackend.Domain.Common
     /// <summary>
     /// AJAX响应结果
     /// </summary>
-    public class AjaxResult<T>
+    public class ApiResult<T>
     {
         /// <summary>
         /// 请求是否成功

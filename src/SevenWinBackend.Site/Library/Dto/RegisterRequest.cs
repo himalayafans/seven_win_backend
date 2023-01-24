@@ -4,7 +4,7 @@ namespace SevenWinBackend.Site.Library.Dto
 {
     public class RegisterRequest
     {
-        [RegularExpression(@"^[0-9a-zA-Z]{3-10}$", ErrorMessage = "账号长度为3-10，仅包含字母或数字")]
+        [RegularExpression(@"^[0-9a-zA-Z]{3-10}$", ErrorMessage = "用户名长度为3-10，仅包含字母或数字")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "用户名不能为空")]
         public string Name { get; set; } = string.Empty;
 

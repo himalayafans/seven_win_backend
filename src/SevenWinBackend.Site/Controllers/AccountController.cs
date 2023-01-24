@@ -19,15 +19,15 @@ namespace SevenWinBackend.Site.Controllers
         }
 
         [HttpPost]
-        public AjaxResult<string> Login([FromBody] LoginRequest request)
+        public ApiResult<string> Login([FromBody] LoginRequest request)
         {
             string token = JwtHelper.GenerateToken(this._configuration, Guid.NewGuid(), "admin");
-            return new AjaxResult<string>() { Content = token, Message = "", Success = true };
+            return new ApiResult<string>() { Content = token, Message = "", Success = true };
         }
         [HttpPost]
-        public AjaxResult<string> Register([FromBody] RegisterRequest request)
+        public ApiResult<string> Register([FromBody] RegisterRequest request)
         {
-            return new AjaxResult<string>() { Content = "", Message = "", Success = true };
+            return new ApiResult<string>() { Content = "", Message = "", Success = true };
         }
 
         [HttpPost]
