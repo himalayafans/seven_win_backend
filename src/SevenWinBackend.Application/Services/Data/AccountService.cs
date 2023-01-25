@@ -1,4 +1,5 @@
 ﻿using SevenWinBackend.Application.Data;
+using SevenWinBackend.Domain.Common;
 using SevenWinBackend.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace SevenWinBackend.Application.Services.Data
             Account? account = await work.Account.GetByName(name);
             if (account != null)
             {
-                throw new InvalidOperationException("该账号已存在");
+                throw new HttpResponseException("该账号已存在");
             }
             account = Account.Create(name.Trim().ToLower(), password.Trim());
             await work.Account.Insert(account);
@@ -41,11 +42,11 @@ namespace SevenWinBackend.Application.Services.Data
             string msg = "账号或密码错误";
             if (account == null)
             {
-                throw new InvalidOperationException(msg);
+                throw new HttpResponseException(msg);
             }
             if (!account.VerifyPassword(password.Trim()))
             {
-                throw new InvalidOperationException(msg);
+                throw new HttpResponseException(msg);
             }
             return account;
         }
@@ -62,7 +63,7 @@ namespace SevenWinBackend.Application.Services.Data
             Account? account = await work.Account.GetById(id);
             if (account == null)
             {
-                throw new InvalidOperationException("该账号不存在");
+                throw new HttpResponseException("该账号不存在");
             }
             account.ModifyPassword(password.Trim());
             await work.Account.Update(account);

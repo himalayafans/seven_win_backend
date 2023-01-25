@@ -9,27 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddAuthentication();
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.InvalidModelStateResponseFactory = actionContext =>
-    {
-        //获取验证失败的模型字段 
-        var errors = actionContext.ModelState
-            .Where(s => s.Value != null && s.Value.ValidationState == ModelValidationState.Invalid)
-            .SelectMany(s => s.Value!.Errors.ToList())
-            .Select(e => e.ErrorMessage)
-            .ToList();
-
-        // 统一返回格式
-        var result = new ApiResult<string>()
-        {
-            Success = false,
-            Message = errors.FirstOrDefault()!,
-            Content = ""
-        };
-        return new BadRequestObjectResult(result);
-    };
-});
+builder.AddSiteServices();
+builder.ConfigModelValidationResponse();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

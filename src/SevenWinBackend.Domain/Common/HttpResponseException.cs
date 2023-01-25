@@ -1,6 +1,11 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SevenWinBackend.Site.Library
+namespace SevenWinBackend.Domain.Common
 {
     public class HttpResponseException : Exception
     {

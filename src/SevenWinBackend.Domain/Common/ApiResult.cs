@@ -22,6 +22,6 @@ namespace SevenWinBackend.Domain.Common
         /// <summary>
         /// 响应内容
         /// </summary>
-        public T? Content { get; set; }
+        public T? Data { get; set; }
     }
 }
