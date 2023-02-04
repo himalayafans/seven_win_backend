@@ -69,6 +69,7 @@ namespace SevenWinBackend.Site.Library
 
         public static void AddSiteServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.TryAddScoped<SettingOptions>();
             builder.Services.TryAddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
             builder.Services.TryAddScoped<AccountService>();

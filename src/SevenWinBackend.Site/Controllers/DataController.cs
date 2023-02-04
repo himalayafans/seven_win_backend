@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SevenWinBackend.Application.Services.Data;
 using SevenWinBackend.Domain.Common;
 using SevenWinBackend.Domain.Entities;
+using SevenWinBackend.Site.Library.Dto;
 
 namespace SevenWinBackend.Site.Controllers
 {
@@ -11,16 +13,19 @@ namespace SevenWinBackend.Site.Controllers
     public class DataController : ControllerBase
     {
         private readonly AccountService _accountService;
-        public DataController(AccountService accountService)
+        private readonly IMapper _mapper;
+        public DataController(AccountService accountService, IMapper mapper)
         {
             _accountService = accountService;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<ApiResult<List<Account>>> GetAllAccounts()
+        public async Task<ApiResult<List<AccountDTO>>> GetAllAccounts()
         {
             var list = await _accountService.GetAccounts();
-            return new ApiResult<List<Account>>() { data = list, success = true };
+            var newList = _mapper.Map<List<Account>, List<AccountDTO>>(list);
+            return new ApiResult<List<AccountDTO>>() { data = newList, success = true };
         }
     }
 }
