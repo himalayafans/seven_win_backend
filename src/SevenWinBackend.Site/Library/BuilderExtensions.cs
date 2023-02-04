@@ -58,9 +58,9 @@ namespace SevenWinBackend.Site.Library
                     // 统一返回格式
                     var result = new ApiResult<string>()
                     {
-                        Success = false,
-                        Message = errors.FirstOrDefault()!,
-                        Data = ""
+                        success = false,
+                        message = errors.FirstOrDefault()!,
+                        data = ""
                     };
                     return new BadRequestObjectResult(result);
                 };

@@ -34,7 +34,7 @@ namespace SevenWinBackend.Site.Library
 
             var errorResponse = new ApiResult<string>
             {
-                Success = false
+                success = false
             };
             switch (exception)
             {
@@ -42,21 +42,21 @@ namespace SevenWinBackend.Site.Library
                     if (ex.Message.Contains("Invalid Token"))
                     {
                         response.StatusCode = (int)HttpStatusCode.Forbidden;
-                        errorResponse.Message = ex.Message;
+                        errorResponse.message = ex.Message;
                     }
                     else
                     {
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        errorResponse.Message = ex.Message;
+                        errorResponse.message = ex.Message;
                     }
                     break;
                 case HttpResponseException ex:
                     response.StatusCode = (int)ex.StatusCode;
-                    errorResponse.Message = ex.Message;
+                    errorResponse.message = ex.Message;
                     break;
                 default:
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    errorResponse.Message = "Internal server error!";
+                    errorResponse.message = "Internal server error!";
                     break;
             }
             _logger.LogError(exception.Message);

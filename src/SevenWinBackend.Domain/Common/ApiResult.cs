@@ -14,14 +14,14 @@ namespace SevenWinBackend.Domain.Common
         /// <summary>
         /// 请求是否成功
         /// </summary>
-        public bool Success { get; set; } = true;
+        public bool success { get; set; } = true;
         /// <summary>
         /// 消息提示，通常是错误的提示信息
         /// </summary>
-        public string Message { get; set; } = "";
+        public string message { get; set; } = "";
         /// <summary>
         /// 响应内容
         /// </summary>
-        public T? Data { get; set; }
+        public T? data { get; set; }
     }
 }

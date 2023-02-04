@@ -24,16 +24,16 @@ namespace SevenWinBackend.Site.Controllers
         [HttpPost]
         public async Task<ApiResult<LoginResponse>> Login([FromBody] LoginRequest request)
         {
-            var account = await this.accountService.Login(request.Name, request.Password);
+            var account = await this.accountService.Login(request.name, request.password);
             string token = JwtHelper.GenerateToken(this._configuration, account.Id, account.Role.ToString());
-            LoginResponse response = new LoginResponse() { Id = account.Id, Name = account.Name, Token = token };
-            return new ApiResult<LoginResponse>() { Data = response, Message = "", Success = true };
+            LoginResponse response = new LoginResponse() { id = account.Id, name = account.Name, token = token };
+            return new ApiResult<LoginResponse>() { data = response, message = "", success = true };
         }
         [HttpPost]
         public async Task<ApiResult<string>> Register([FromBody] RegisterRequest request)
         {
             await this.accountService.Register(request.Name, request.Password);
-            return new ApiResult<string>() { Data = "", Message = "", Success = true };
+            return new ApiResult<string>() { data = "", message = "", success = true };
         }
 
         [HttpPost]
