@@ -14,5 +14,9 @@ namespace SevenWinBackend.Application.Repositories
     public interface IAccountRepository : IRepository<Account>
     {
         Task<Account?> GetByName(string name);
+        /// <summary>
+        /// 获取除管理员的所有账号
+        /// </summary>
+        Task<List<Account>> GetAccounts();
     }
 }

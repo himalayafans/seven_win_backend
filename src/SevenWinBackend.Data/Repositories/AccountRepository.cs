@@ -48,5 +48,14 @@ namespace SevenWinBackend.Data.Repositories
             string sql = "select * from account where lower(name) = @Name;";
             return await this.Db.SingleOrDefaultAsync<Account?>(sql, new { Name = name });
         }
+        /// <summary>
+        /// 获取除管理员的所有账号
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Account>> GetAccounts()
+        {
+            string sql = "SELECT * FROM account WHERE name != 'admin';";
+            return await this.Db.FetchAsync<Account>(sql);
+        }
     }
 }

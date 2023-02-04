@@ -68,5 +68,13 @@ namespace SevenWinBackend.Application.Services.Data
             account.ModifyPassword(password.Trim());
             await work.Account.Update(account);
         }
+        /// <summary>
+        /// 获取除管理员的所有账号
+        /// </summary>
+        public async Task<List<Account>> GetAccounts()
+        {
+            using var work = unitOfWorkFactory.Create();
+            return await work.Account.GetAccounts();
+        }
     }
 }
