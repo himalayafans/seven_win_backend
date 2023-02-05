@@ -49,13 +49,23 @@ namespace SevenWinBackend.Data.Repositories
             return await this.Db.SingleOrDefaultAsync<Account?>(sql, new { Name = name });
         }
         /// <summary>
-        /// 获取除管理员的所有账号
+        /// 搜索
         /// </summary>
-        /// <returns></returns>
-        public async Task<List<Account>> GetAccounts()
+        public async Task<List<Account>> Search(string? name)
         {
-            string sql = "SELECT * FROM account WHERE name != 'admin';";
-            return await this.Db.FetchAsync<Account>(sql);
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                string sql = "SELECT * FROM account order by created_at desc;";
+                return await this.Db.FetchAsync<Account>(sql);
+            }
+            else
+            {
+                name = name.Trim().ToLower();
+                name = $"{name}%";
+                string sql = "SELECT * FROM account WHERE name like @Name order by created_at desc;";
+                return await this.Db.FetchAsync<Account>(sql, new { Name = name });
+            }
+
         }
     }
 }

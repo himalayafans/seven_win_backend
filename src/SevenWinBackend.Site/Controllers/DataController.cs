@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SevenWinBackend.Application.Services.Data;
 using SevenWinBackend.Domain.Common;
 using SevenWinBackend.Domain.Entities;
+using SevenWinBackend.Domain.Enums;
 using SevenWinBackend.Site.Library.Dto;
 
 namespace SevenWinBackend.Site.Controllers
@@ -18,14 +20,6 @@ namespace SevenWinBackend.Site.Controllers
         {
             _accountService = accountService;
             _mapper = mapper;
-        }
-
-        [HttpPost]
-        public async Task<ApiResult<List<AccountDTO>>> GetAllAccounts()
-        {
-            var list = await _accountService.GetAccounts();
-            var newList = _mapper.Map<List<Account>, List<AccountDTO>>(list);
-            return new ApiResult<List<AccountDTO>>() { data = newList, success = true };
         }
     }
 }

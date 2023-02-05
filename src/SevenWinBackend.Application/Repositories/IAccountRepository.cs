@@ -17,6 +17,6 @@ namespace SevenWinBackend.Application.Repositories
         /// <summary>
         /// 获取除管理员的所有账号
         /// </summary>
-        Task<List<Account>> GetAccounts();
+        Task<List<Account>> Search(string? name);
     }
 }

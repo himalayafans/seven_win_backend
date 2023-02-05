@@ -1,6 +1,7 @@
 ﻿using SevenWinBackend.Application.Data;
 using SevenWinBackend.Domain.Common;
 using SevenWinBackend.Domain.Entities;
+using SevenWinBackend.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,12 +70,31 @@ namespace SevenWinBackend.Application.Services.Data
             await work.Account.Update(account);
         }
         /// <summary>
-        /// 获取除管理员的所有账号
+        /// 搜索账号
         /// </summary>
-        public async Task<List<Account>> GetAccounts()
+        public async Task<List<Account>> Search(string? name)
         {
             using var work = unitOfWorkFactory.Create();
-            return await work.Account.GetAccounts();
+            return await work.Account.Search(name);
+        }
+        /// <summary>
+        /// 激活账号
+        /// </summary>
+        public async Task<Account> Active(Guid id)
+        {
+            using var work = unitOfWorkFactory.Create();
+            var account = await work.Account.GetById(id);
+            if (account == null)
+            {
+                throw new HttpResponseException("该账号不存在");
+            }
+            if (account.Role != RolesType.User)
+            {
+                throw new HttpResponseException("该账号已激活");
+            }
+            account.Role = RolesType.Operator;
+            await work.Account.Update(account);
+            return account;
         }
     }
 }
